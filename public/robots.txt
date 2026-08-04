@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Alan adı değiştiğinde bu satırı da güncelleyin (docs/04-BEKLEYEN-BILGI.md)
+Sitemap: https://bulentboyaci.com/sitemap-index.xml

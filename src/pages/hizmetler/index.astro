@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
+import ProcessTimeline from '@components/sections/ProcessTimeline.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+
+const crumbs = [{ label: 'Hizmetler', href: '/hizmetler' }];
+---
+
+<BaseLayout
+  title="Hizmetlerimiz | Boya, Alçı ve Saten — Bülent Usta"
+  description="İç cephe boyama, alçı-saten uygulaması, eşyalı ev boyama, dekoratif boya, iş yeri ve dış cephe boyama. Darıca, Gebze ve Çayırova'da boya ustası."
+  {crumbs}
+>
+  <PageHeader
+    eyebrow="Ne yapıyoruz"
+    heading="Hizmetlerimiz"
+    lead="Boyadan alçıya, tek daireden komple iş yerine kadar. Aşağıdaki başlıklardan hangisi size uyuyorsa detayına bakabilir ya da doğrudan arayıp anlatabilirsiniz."
+    {crumbs}
+  />
+
+  <ServicesGrid showHeader={false} />
+  <ProcessTimeline />
+  <ContactCta />
+</BaseLayout>

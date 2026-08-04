@@ -1,0 +1,40 @@
+---
+/**
+ * Görsel breadcrumb. BreadcrumbList şeması BaseLayout tarafından ayrıca üretilir
+ * (aynı veriden, tek kaynak: crumbs prop'u).
+ */
+export type Crumb = { label: string; href: string };
+
+interface Props {
+  crumbs: Crumb[];
+  /** Koyu zemin üzerinde mi gösteriliyor */
+  variant?: 'light' | 'dark';
+}
+
+const { crumbs, variant = 'light' } = Astro.props;
+
+// ink-400 açık zeminde 2.5:1 kalıyor (WCAG AA için 4.5 gerekir) → ink-500
+const base = variant === 'dark' ? 'text-white/70' : 'text-ink-500';
+const link = variant === 'dark' ? 'hover:text-white' : 'hover:text-brand-700';
+const current = variant === 'dark' ? 'text-white/90' : 'text-ink-600';
+---
+
+<nav aria-label="Sayfa yolu" class={`text-sm ${base}`}>
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    <li>
+      <a href="/" class={`transition-colors ${link}`}>Ana Sayfa</a>
+    </li>
+    {crumbs.map((crumb, i) => (
+      <>
+        <li aria-hidden="true" class="select-none">/</li>
+        <li>
+          {i === crumbs.length - 1 ? (
+            <span class={current} aria-current="page">{crumb.label}</span>
+          ) : (
+            <a href={crumb.href} class={`transition-colors ${link}`}>{crumb.label}</a>
+          )}
+        </li>
+      </>
+    ))}
+  </ol>
+</nav>

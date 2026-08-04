@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import type { Work } from '@data/works';
+
+interface Props {
+  work: Work;
+  /** Lightbox bağlantısı üret (galeri sayfasında true) */
+  lightbox?: boolean;
+  loading?: 'lazy' | 'eager';
+}
+
+const { work, lightbox = false, loading = 'lazy' } = Astro.props;
+
+const stageLabel = {
+  hazirlik: 'Hazırlık',
+  uygulama: 'Uygulama',
+  tamamlandi: 'Tamamlandı',
+}[work.stage];
+
+const Wrapper = lightbox ? 'a' : 'div';
+const wrapperProps = lightbox
+  ? { href: `#buyut-${work.id}`, 'aria-label': `${work.title} — büyüt` }
+  : {};
+---
+
+<figure class="card group relative overflow-hidden p-0">
+  <Wrapper {...wrapperProps} class="block overflow-hidden bg-ink-100">
+    <Image
+      src={work.image}
+      alt={work.alt}
+      widths={[400, 800]}
+      sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
+      {loading}
+      decoding="async"
+      class="aspect-4/3 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  </Wrapper>
+
+  {/* Rozet bilerek bağlantının DIŞINDA: içinde olsaydı bağlantının erişilebilir
+      adı ile görünen metni uyuşmaz, sesle kontrol kullananlar bağlantıya
+      ulaşamazdı. Görsel konum aynı kalıyor. */}
+  <span
+    class="pointer-events-none absolute left-3 top-3 rounded-pill bg-ink-900/75 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur"
+  >
+    {stageLabel}
+  </span>
+
+  <figcaption class="flex flex-1 flex-col p-5">
+    <h3 class="text-base font-bold text-ink-900">{work.title}</h3>
+    <p class="mt-1.5 text-sm leading-relaxed text-ink-500">{work.caption}</p>
+  </figcaption>
+</figure>

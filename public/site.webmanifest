@@ -1,0 +1,25 @@
+{
+  "name": "Bülent Usta — Darıca Boyacı",
+  "short_name": "Bülent Usta",
+  "description": "Darıca, Gebze ve Çayırova'da iç cephe boyama, alçı ve saten uygulaması.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

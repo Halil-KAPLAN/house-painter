@@ -1,0 +1,474 @@
+/* ============================================================================
+   _base.css — Sitenin TEK stil dosyası ve tema merkezi
+   ----------------------------------------------------------------------------
+   Tailwind 4 CSS-first çalışır: tailwind.config.js YOKTUR, tema burada tanımlıdır.
+
+   KURAL: Hiçbir .astro dosyasında keyfi renk/ölçü değeri yazılmaz.
+   `bg-[#1e40af]` yasak → `bg-brand-700` kullanılır.
+   Yeni bir renk veya ölçü gerekiyorsa önce buraya token olarak eklenir.
+
+   Bölümler:
+     1. @theme        → tasarım token'ları (Tailwind sınıfları buradan üretilir)
+     2. @layer base   → HTML elemanlarının varsayılan görünümü
+     3. @layer components → tekrar eden arayüz parçaları
+     4. Yardımcılar   → animasyon, erişilebilirlik
+   ============================================================================ */
+
+@import 'tailwindcss';
+
+/* ============================================================================
+   1. TEMA TOKEN'LARI
+   ============================================================================ */
+
+@theme {
+  /* ---------------------------------------------------------------------
+     Renk — Marka (güven veren lacivert-mavi)
+     Boyacılıkta beklenti "temiz ve güvenilir". Mavi bunu taşır; turuncu
+     vurgu ise telefon/CTA butonlarını öne çıkarır.
+     --------------------------------------------------------------------- */
+  --color-brand-50: oklch(0.971 0.014 254);
+  --color-brand-100: oklch(0.937 0.031 254);
+  --color-brand-200: oklch(0.882 0.061 254);
+  --color-brand-300: oklch(0.808 0.1 253);
+  --color-brand-400: oklch(0.71 0.146 254);
+  --color-brand-500: oklch(0.623 0.184 259);
+  --color-brand-600: oklch(0.545 0.204 263);
+  --color-brand-700: oklch(0.476 0.19 264);
+  --color-brand-800: oklch(0.412 0.157 264);
+  --color-brand-900: oklch(0.372 0.125 262);
+  --color-brand-950: oklch(0.256 0.087 264);
+
+  /* ---------------------------------------------------------------------
+     Renk — Vurgu (CTA turuncusu). Sıcak, dikkat çeken, "ara beni" rengi.
+
+     ⚠️ 600 ve üzeri tonlar BEYAZ METİN taşır (butonlar). WCAG AA için
+     kontrast en az 4.5:1 olmalı. Bu yüzden 600 tonu bilerek koyu tutuldu —
+     daha canlı bir turuncu (L≈0.65) beyaz metinle sadece 3.6:1 veriyor ve
+     güneş altında telefonda okunmuyor. Bu tonları açarken kontrastı
+     yeniden ölçün.
+     --------------------------------------------------------------------- */
+  --color-accent-50: oklch(0.98 0.016 73);
+  --color-accent-100: oklch(0.954 0.038 75);
+  --color-accent-200: oklch(0.901 0.076 70);
+  --color-accent-300: oklch(0.837 0.128 66);
+  --color-accent-400: oklch(0.77 0.166 58);
+  --color-accent-500: oklch(0.705 0.187 47);
+  --color-accent-600: oklch(0.575 0.19 41); /* beyaz metinle 4.7:1 ✓ */
+  --color-accent-700: oklch(0.505 0.163 39); /* hover — 6.3:1 ✓ */
+  --color-accent-800: oklch(0.44 0.135 38);
+  --color-accent-900: oklch(0.385 0.11 39);
+
+  /* ---------------------------------------------------------------------
+     Renk — Metin ve yüzey grileri (hafif mavi tonlu, soğuk beyaz)
+     --------------------------------------------------------------------- */
+  --color-ink-50: oklch(0.984 0.003 248);
+  --color-ink-100: oklch(0.968 0.007 248);
+  --color-ink-200: oklch(0.929 0.013 256);
+  --color-ink-300: oklch(0.869 0.02 253);
+  --color-ink-400: oklch(0.704 0.04 257);
+  --color-ink-500: oklch(0.554 0.046 257);
+  --color-ink-600: oklch(0.446 0.043 257);
+  --color-ink-700: oklch(0.372 0.044 257);
+  --color-ink-800: oklch(0.279 0.041 260);
+  --color-ink-900: oklch(0.208 0.042 266);
+  --color-ink-950: oklch(0.129 0.042 265);
+
+  /* WhatsApp yeşili.
+     ⚠️ WhatsApp'ın kurumsal yeşili (#25D366) beyaz metinle sadece 2.3:1 kontrast
+     verir — WCAG AA'nın yarısı, güneş altında telefonda okunmaz. Yeşil kimliği
+     korunarak ton koyulaştırıldı. Açmadan önce kontrastı yeniden ölçün. */
+  --color-whatsapp: oklch(0.53 0.155 150); /* beyaz metinle 4.9:1 ✓ */
+  --color-whatsapp-dark: oklch(0.47 0.14 150); /* hover — 6.2:1 ✓ */
+
+  /* ---------------------------------------------------------------------
+     Tipografi
+     Sistem font yığını kullanıyoruz: sıfır network isteği, anında render,
+     mükemmel LCP. Harici font indirmek burada hiçbir görsel kazanç sağlamaz.
+     --------------------------------------------------------------------- */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+  /* Akışkan ölçek — mobile-first, viewport ile büyür */
+  --text-hero: clamp(2rem, 1.35rem + 3.2vw, 3.75rem);
+  --text-hero--line-height: 1.1;
+  --text-hero--letter-spacing: -0.025em;
+
+  --text-section: clamp(1.625rem, 1.3rem + 1.6vw, 2.5rem);
+  --text-section--line-height: 1.15;
+  --text-section--letter-spacing: -0.02em;
+
+  --text-subsection: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem);
+  --text-subsection--line-height: 1.25;
+  --text-subsection--letter-spacing: -0.015em;
+
+  --text-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+
+  /* ---------------------------------------------------------------------
+     Ölçü ve şekil
+     --------------------------------------------------------------------- */
+  --radius-card: 0.875rem;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 1px 2px oklch(0.208 0.042 266 / 0.06), 0 4px 16px oklch(0.208 0.042 266 / 0.06);
+  --shadow-card-hover: 0 2px 4px oklch(0.208 0.042 266 / 0.08), 0 12px 32px oklch(0.208 0.042 266 / 0.12);
+  --shadow-bar: 0 -1px 3px oklch(0.208 0.042 266 / 0.08), 0 -8px 24px oklch(0.208 0.042 266 / 0.06);
+
+  /* Bölümler arası dikey boşluk — mobilde dar, masaüstünde geniş */
+  --spacing-section: clamp(3rem, 2rem + 5vw, 6rem);
+
+  /* Mobil sabit arama barının yüksekliği (içerik altına padding için) */
+  --spacing-callbar: 4.25rem;
+
+  /* İçerik genişliği */
+  --container-content: 72rem;
+  --container-prose: 44rem;
+
+  /* Animasyon */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================================
+   2. BASE — HTML elemanlarının varsayılan görünümü
+   ============================================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sabit header'ın altına kayan içeriği engelle */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-white);
+    color: var(--color-ink-700);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Mobilde sabit arama barı içeriği kapatmasın */
+    padding-bottom: var(--spacing-callbar);
+  }
+
+  @media (min-width: 48rem) {
+    body {
+      padding-bottom: 0;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink-900);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Klavye kullanıcıları için görünür odak halkası — erişilebilirlik şartı */
+  :focus-visible {
+    outline: 3px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Görselin ölçüsü verilmediğinde bile taşmasın */
+  img,
+  picture,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Hareket hassasiyeti olan kullanıcılar için animasyonları kapat */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================================================
+   3. COMPONENTS — tekrar eden arayüz parçaları
+   ============================================================================ */
+
+@layer components {
+  /* --- Yerleşim ------------------------------------------------------- */
+
+  .container-content {
+    width: 100%;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 40rem) {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  .container-prose {
+    width: 100%;
+    max-width: var(--container-prose);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .section {
+    padding-block: var(--spacing-section);
+  }
+
+  .section-tight {
+    padding-block: calc(var(--spacing-section) * 0.6);
+  }
+
+  /* --- Butonlar ------------------------------------------------------- */
+  /* min-height 2.75rem = 44px → mobil dokunma hedefi standardı */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1.375rem;
+    padding-block: 0.6875rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      background-color 0.2s var(--ease-out-soft),
+      color 0.2s var(--ease-out-soft),
+      box-shadow 0.2s var(--ease-out-soft),
+      transform 0.2s var(--ease-out-soft);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent-600);
+    color: var(--color-white);
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-700);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .btn-whatsapp {
+    background-color: var(--color-whatsapp);
+    color: var(--color-white);
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-whatsapp:hover {
+    background-color: var(--color-whatsapp-dark);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-brand-700);
+    border: 2px solid var(--color-brand-200);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--color-brand-50);
+    border-color: var(--color-brand-400);
+  }
+
+  /* Koyu zemin üzerinde kullanılan ikincil buton */
+  .btn-ghost-light {
+    background-color: color-mix(in oklch, var(--color-white) 14%, transparent);
+    color: var(--color-white);
+    border: 1px solid color-mix(in oklch, var(--color-white) 32%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .btn-ghost-light:hover {
+    background-color: color-mix(in oklch, var(--color-white) 24%, transparent);
+  }
+
+  /* --- Kartlar -------------------------------------------------------- */
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-ink-200);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    transition:
+      box-shadow 0.25s var(--ease-out-soft),
+      border-color 0.25s var(--ease-out-soft),
+      transform 0.25s var(--ease-out-soft);
+  }
+
+  .card-link:hover {
+    border-color: var(--color-brand-300);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .card-muted {
+    background-color: var(--color-ink-50);
+    border-color: var(--color-ink-200);
+    box-shadow: none;
+  }
+
+  /* --- Başlık grupları ------------------------------------------------- */
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-brand-600);
+  }
+
+  .section-title {
+    font-size: var(--text-section);
+    line-height: var(--text-section--line-height);
+    letter-spacing: var(--text-section--letter-spacing);
+    margin-top: 0.5rem;
+  }
+
+  .section-lead {
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    color: var(--color-ink-600);
+    margin-top: 0.875rem;
+    max-width: 46rem;
+  }
+
+  /* --- Metin blokları (hizmet/bölge sayfası gövdeleri) ----------------- */
+
+  .prose-body > * + * {
+    margin-top: 1.125rem;
+  }
+
+  .prose-body p {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-600);
+  }
+
+  .prose-body h2 {
+    font-size: var(--text-subsection);
+    line-height: var(--text-subsection--line-height);
+    letter-spacing: var(--text-subsection--letter-spacing);
+    margin-top: 2.5rem;
+  }
+
+  .prose-body h3 {
+    font-size: 1.1875rem;
+    margin-top: 2rem;
+  }
+
+  .prose-body a {
+    color: var(--color-brand-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .prose-body a:hover {
+    color: var(--color-brand-800);
+  }
+
+  /* --- Rozet ---------------------------------------------------------- */
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding-inline: 0.75rem;
+    padding-block: 0.3125rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    background-color: var(--color-brand-50);
+    color: var(--color-brand-700);
+    border: 1px solid var(--color-brand-100);
+  }
+
+  /* Rozet bir BAĞLANTIYSA parmakla basılabilir olmalı (min 44px).
+     Sadece dokunmatik cihazlarda uygulanır — masaüstünde rozetler kompakt kalır.
+     `a.badge` seçicisi sayesinde etiket olarak kullanılan rozetler etkilenmez. */
+  @media (pointer: coarse) {
+    a.badge {
+      min-height: 2.75rem;
+      padding-inline: 1rem;
+    }
+  }
+
+  /* --- Bağlantı listesi (footer, mahalle listeleri) -------------------- */
+
+  .link-muted {
+    color: var(--color-ink-500);
+    transition: color 0.15s var(--ease-out-soft);
+  }
+
+  .link-muted:hover {
+    color: var(--color-brand-700);
+  }
+}
+
+/* ============================================================================
+   4. YARDIMCILAR
+   ============================================================================ */
+
+/* Ekran okuyucu dışında görünmez — "içeriğe atla" bağlantısı için */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Hero üzerindeki fotoğrafın üstüne binen okunabilirlik katmanı */
+.scrim {
+  background: linear-gradient(
+    to right,
+    oklch(0.208 0.042 266 / 0.92) 0%,
+    oklch(0.208 0.042 266 / 0.78) 45%,
+    oklch(0.208 0.042 266 / 0.45) 100%
+  );
+}
+
+@media (max-width: 47.99rem) {
+  .scrim {
+    background: linear-gradient(
+      to bottom,
+      oklch(0.208 0.042 266 / 0.82) 0%,
+      oklch(0.208 0.042 266 / 0.88) 100%
+    );
+  }
+}

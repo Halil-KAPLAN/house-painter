@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import Faq from '@components/sections/Faq.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+import { FAQS } from '@config/site';
+
+const crumbs = [{ label: 'Sıkça Sorulan Sorular', href: '/sikca-sorulan-sorular' }];
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="Sıkça Sorulan Sorular | Ev Boyama Hakkında — Bülent Usta"
+  description="Ev boyama kaç gün sürer? Eşyalı evde boya yapılır mı? Astar şart mı? Boya işiyle ilgili en çok sorulan soruların dürüst cevapları."
+  {crumbs}
+  schemas={[faqSchema]}
+>
+  <PageHeader
+    eyebrow="Merak edilenler"
+    heading="Sıkça Sorulan Sorular"
+    lead="Telefonda en çok sorulan sorular ve dürüst cevapları. Aradığınızı bulamazsanız arayın, konuşalım."
+    {crumbs}
+  />
+
+  <Faq showHeader={false} />
+  <ContactCta />
+</BaseLayout>

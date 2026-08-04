@@ -1,0 +1,47 @@
+---
+/**
+ * Ana sayfadaki galeri önizlemesi — 6 iş, ardından tam galeriye link.
+ */
+import { WORKS } from '@data/works';
+import WorkCard from '../WorkCard.astro';
+import Icon from '../Icon.astro';
+
+const featured = [
+  'dolu-daire-salon',
+  'cocuk-odasi-dekoratif',
+  'asma-tavan-kartonpiyer',
+  'saten-alci-uygulamasi',
+  'mutfak-boyama-tamamlandi',
+  'dukkan-boyama-hazirlik',
+];
+
+const works = featured
+  .map((id) => WORKS.find((w) => w.id === id))
+  .filter((w): w is NonNullable<typeof w> => w !== undefined);
+---
+
+<section class="section">
+  <div class="container-content">
+    <div
+      class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
+    >
+      <div class="max-w-2xl">
+        <span class="eyebrow">Referanslarımız</span>
+        <h2 class="section-title">Yaptığımız İşler</h2>
+        <p class="section-lead">
+          Darıca, Gebze ve çevresinde tamamladığımız daire, dükkân ve iş yeri
+          boyamalarından bir bölümü.
+        </p>
+      </div>
+
+      <a href="/yaptigimiz-isler" class="btn btn-outline shrink-0">
+        Tümünü gör
+        <Icon name="arrow-right" class="size-4" />
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {works.map((work) => <WorkCard {work} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+import { SERVICES } from '@config/site';
+import ServiceCard from '../ServiceCard.astro';
+import Icon from '../Icon.astro';
+
+interface Props {
+  /** Başlık gösterilsin mi (hizmetler hub sayfasında zaten h1 var) */
+  showHeader?: boolean;
+  heading?: string;
+  /** h2 yerine h3 kullan (sayfa içi hiyerarşi için) */
+  as?: 'h2' | 'h3';
+}
+
+const {
+  showHeader = true,
+  heading = 'Hizmetlerimiz',
+  as: Heading = 'h2',
+}: Props = Astro.props;
+---
+
+<section class="section">
+  <div class="container-content">
+    {showHeader && (
+      <div class="max-w-2xl">
+        <span class="eyebrow">Ne yapıyoruz</span>
+        <Heading class="section-title">{heading}</Heading>
+        <p class="section-lead">
+          Boyadan alçıya, tek daireden komple iş yerine kadar. Her işin kendi yöntemi var;
+          hangisini istediğinizden emin değilseniz arayın, konuşalım.
+        </p>
+      </div>
+    )}
+
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {SERVICES.map((service) => <ServiceCard {service} />)}
+    </div>
+
+    <div class="mt-10 rounded-card border border-brand-100 bg-brand-50 p-6 sm:p-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex gap-4">
+          <span
+            class="hidden size-11 shrink-0 items-center justify-center rounded-xl bg-brand-700 text-white sm:flex"
+          >
+            <Icon name="sparkles" class="size-6" />
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-ink-900">
+              Aradığınız hizmet listede yok mu?
+            </h3>
+            <p class="mt-1 text-sm text-ink-600">
+              Boya ve alçı işlerinin çoğunu yapıyoruz. Arayın, işin ne olduğunu anlatın.
+            </p>
+          </div>
+        </div>
+        <a href="/iletisim" class="btn btn-outline shrink-0 bg-white">
+          İletişime geç
+          <Icon name="arrow-right" class="size-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

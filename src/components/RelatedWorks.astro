@@ -1,0 +1,38 @@
+---
+/**
+ * Hizmet ve bölge sayfalarında gösterilen ilgili iş görselleri.
+ */
+import { getWorks } from '@data/works';
+import WorkCard from './WorkCard.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  ids: string[];
+  heading?: string;
+  lead?: string;
+}
+
+const { ids, heading = 'Bu İşten Örnekler', lead } = Astro.props;
+const works = getWorks(ids);
+---
+
+{works.length > 0 && (
+  <section class="section bg-ink-50">
+    <div class="container-content">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-2xl">
+          <h2 class="section-title">{heading}</h2>
+          {lead && <p class="section-lead">{lead}</p>}
+        </div>
+        <a href="/yaptigimiz-isler" class="btn btn-outline shrink-0 bg-white">
+          Tüm işler
+          <Icon name="arrow-right" class="size-4" />
+        </a>
+      </div>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {works.map((work) => <WorkCard {work} />)}
+      </div>
+    </div>
+  </section>
+)}

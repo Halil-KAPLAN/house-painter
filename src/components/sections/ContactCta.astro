@@ -1,0 +1,54 @@
+---
+import { CONTACT, phoneHref, whatsappHref } from '@config/site';
+import Icon from '../Icon.astro';
+
+interface Props {
+  heading?: string;
+  body?: string;
+  as?: 'h2' | 'h3';
+}
+
+const {
+  heading = 'Evinizi Boyatmayı mı Düşünüyorsunuz?',
+  body = 'Arayın, gelip yerinde bakalım. Keşif ücretsiz — ne yapılması gerektiğini anlatır, net fiyat veririz. Fiyatı görünce karar verirsiniz.',
+  as: Heading = 'h2',
+}: Props = Astro.props;
+---
+
+<section class="section bg-brand-800">
+  <div class="container-content">
+    <div class="mx-auto max-w-3xl text-center">
+      <Heading class="section-title !text-white">{heading}</Heading>
+      <p class="section-lead mx-auto !text-brand-100">{body}</p>
+
+      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={phoneHref} class="btn btn-primary text-base sm:text-lg">
+          <Icon name="phone" class="size-5" />
+          {CONTACT.phoneDisplayFull}
+        </a>
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-whatsapp text-base sm:text-lg"
+        >
+          <Icon name="whatsapp" class="size-5" />
+          WhatsApp'tan Yaz
+        </a>
+      </div>
+
+      <p
+        class="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-brand-200"
+      >
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="clock" class="size-4" />
+          {CONTACT.openingHoursDisplay}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="map-pin" class="size-4" />
+          Darıca · Gebze · Çayırova · Tuzla · Pendik · Kartal
+        </span>
+      </p>
+    </div>
+  </div>
+</section>

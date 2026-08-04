@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import RegionsGrid from '@components/sections/RegionsGrid.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+
+const crumbs = [{ label: 'Bölgeler', href: '/bolgeler' }];
+---
+
+<BaseLayout
+  title="Hizmet Bölgelerimiz | Darıca, Gebze, Çayırova — Bülent Usta"
+  description="Darıca, Gebze ve Çayırova başta olmak üzere Marmaray hattı boyunca Tuzla, Pendik ve Kartal'da boya ve alçı hizmeti. Ücretsiz keşif için arayın."
+  {crumbs}
+>
+  <PageHeader
+    eyebrow="Nerelere geliyoruz"
+    heading="Hizmet Verdiğimiz Bölgeler"
+    lead="Merkezimiz Darıca. Gebze ve Çayırova en yoğun çalıştığımız ilçeler. Marmaray hattı boyunca — karşıya geçmeden, Anadolu yakasında — Tuzla, Pendik ve Kartal'a da geliyoruz."
+    {crumbs}
+  />
+
+  <RegionsGrid showHeader={false} />
+  <ContactCta />
+</BaseLayout>

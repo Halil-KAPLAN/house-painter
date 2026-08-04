@@ -1,0 +1,79 @@
+---
+/**
+ * Ana sayfa hero bölümü.
+ * LCP elemanı buradaki fotoğraf — eager + fetchpriority="high" ile yükleniyor.
+ */
+import { Image } from 'astro:assets';
+import { CONTACT, phoneHref, whatsappHref } from '@config/site';
+import Icon from '../Icon.astro';
+import heroImage from '@assets/isler/dolu-daire-salon-boyama.webp';
+---
+
+<section class="relative isolate overflow-hidden bg-ink-900">
+  {/* Arka plan fotoğrafı — LCP elemanı */}
+  <Image
+    src={heroImage}
+    alt="Darıca'da eşyalı dairede tamamlanmış salon boyası"
+    widths={[640, 1024, 1600]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="absolute inset-0 -z-10 size-full object-cover object-center"
+  />
+  <div class="scrim absolute inset-0 -z-10"></div>
+
+  <div class="container-content">
+    <div class="max-w-2xl py-20 sm:py-28 lg:py-36">
+      <p class="badge border-white/20 bg-white/10 text-white backdrop-blur">
+        <Icon name="map-pin" class="size-3.5" />
+        Darıca · Gebze · Çayırova
+      </p>
+
+      <h1
+        class="mt-5 text-balance font-bold text-white"
+        style="font-size: var(--text-hero); line-height: var(--text-hero--line-height); letter-spacing: var(--text-hero--letter-spacing);"
+      >
+        Darıca'da Boya Ustası —
+        <span class="text-accent-400">Eşyalarınıza Zarar Vermeden</span>,
+        Tertemiz Teslim
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
+        İç cephe boyama, alçı ve saten uygulaması. Dolu dairede de çalışırız:
+        eşyalarınızı örter, süpürgelikleri bantlar, işi bitirince evi süpürüp
+        teslim ederiz.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href={phoneHref} class="btn btn-primary text-base sm:text-lg">
+          <Icon name="phone" class="size-5" />
+          Hemen Ara — {CONTACT.phoneDisplay}
+        </a>
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-ghost-light text-base sm:text-lg"
+        >
+          <Icon name="whatsapp" class="size-5" />
+          WhatsApp'tan Yaz
+        </a>
+      </div>
+
+      <p class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/70">
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="check" class="size-4 text-accent-400" />
+          Yerinde ücretsiz keşif
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="check" class="size-4 text-accent-400" />
+          Tavan ve duvar iki kat
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="check" class="size-4 text-accent-400" />
+          {CONTACT.openingHoursDisplay}
+        </span>
+      </p>
+    </div>
+  </div>
+</section>

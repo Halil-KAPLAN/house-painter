@@ -1,0 +1,98 @@
+---
+/**
+ * schema.org yapısal verisi (JSON-LD).
+ *
+ * Ana tip: HousePainter
+ *   LocalBusiness › HomeAndConstructionBusiness › HousePainter
+ * Genel LocalBusiness yerine bunu kullanmak Google'a mesleği net bildirir.
+ *
+ * ⛔ aggregateRating / Review BİLEREK eklenmedi — gerçek müşteri yorumu yok.
+ *    Uydurma puan Google spam politikası ihlalidir ve tüm zengin sonuçları kapatır.
+ *    Gerçek yorum toplandığında eklenecek → docs/04-BEKLEYEN-BILGI.md
+ */
+import { SITE, CONTACT, SERVICES, AREA_SERVED } from '@config/site';
+
+interface Props {
+  /** Ek şemalar: Service, FAQPage, BreadcrumbList vb. */
+  schemas?: Record<string, unknown>[];
+}
+
+const { schemas = [] } = Astro.props;
+
+const businessId = `${SITE.url}/#boyaci`;
+
+// Adres — henüz sokak bilgisi yok, sadece ilçe/il veriliyor.
+// Bilgi gelince site.ts güncellenir, buraya otomatik yansır.
+const address: Record<string, string> = {
+  '@type': 'PostalAddress',
+  addressLocality: CONTACT.address.district,
+  addressRegion: CONTACT.address.city,
+  addressCountry: CONTACT.address.country,
+};
+if (CONTACT.address.street) address.streetAddress = CONTACT.address.street;
+if (CONTACT.address.postalCode) address.postalCode = CONTACT.address.postalCode;
+
+const business: Record<string, unknown> = {
+  '@type': 'HousePainter',
+  '@id': businessId,
+  name: SITE.name,
+  alternateName: SITE.tagline,
+  description: SITE.shortDescription,
+  url: SITE.url,
+  image: `${SITE.url}/og-image.jpg`,
+  telephone: CONTACT.phone,
+  priceRange: '₺₺',
+  currenciesAccepted: 'TRY',
+  paymentAccepted: 'Nakit, Havale/EFT',
+  address,
+  areaServed: AREA_SERVED.map((name) => ({ '@type': 'City', name })),
+  openingHoursSpecification: CONTACT.openingHours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  knowsLanguage: 'tr',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Boya ve Alçı Hizmetleri',
+    itemListElement: SERVICES.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.title,
+        description: s.summary,
+        url: `${SITE.url}/hizmetler/${s.slug}`,
+      },
+    })),
+  },
+};
+
+if (CONTACT.geo) {
+  business.geo = {
+    '@type': 'GeoCoordinates',
+    latitude: CONTACT.geo.lat,
+    longitude: CONTACT.geo.lng,
+  };
+}
+if (CONTACT.email) business.email = CONTACT.email;
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    business,
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      description: SITE.shortDescription,
+      inLanguage: 'tr-TR',
+      publisher: { '@id': businessId },
+    },
+    ...schemas,
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(graph)} is:inline />

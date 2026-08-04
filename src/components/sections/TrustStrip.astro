@@ -1,0 +1,54 @@
+---
+/**
+ * Güven şeridi — hero'nun hemen altında, ziyaretçinin ilk sorularına cevap.
+ * Her madde ustanın gerçekten yaptığı bir şeyi anlatır; doğrulanamayan iddia yok.
+ */
+import Icon from '../Icon.astro';
+import type { IconName } from '../Icon.astro';
+
+const items: { icon: IconName; title: string; body: string }[] = [
+  {
+    icon: 'shield',
+    title: 'Eşyalarınız güvende',
+    body: 'Mavi naylon, kâğıt bant ve zemin koruması. Her yüzey kapatılmadan işe başlamayız.',
+  },
+  {
+    icon: 'broom',
+    title: 'Tertemiz teslim',
+    body: 'İş bitince naylonlar kaldırılır, ortalık süpürülür. Evi geldiğimizden temiz bırakırız.',
+  },
+  {
+    icon: 'roller',
+    title: 'Tek kat değil, iki kat',
+    body: 'Tavana iki kat, duvara iki kat. Bu bizim standardımız, pazarlık konusu değil.',
+  },
+  {
+    icon: 'map-pin',
+    title: 'Yerinde ücretsiz keşif',
+    body: 'Gelir, ölçer, ne gerektiğini anlatır ve net fiyat veririz. Keşif için ücret almayız.',
+  },
+];
+---
+
+<section class="border-b border-ink-200 bg-ink-50">
+  <div class="container-content section-tight">
+    {/* Görünmez h2 — h1'den h3'e atlamayı engeller (başlık hiyerarşisi) */}
+    <h2 class="sr-only">Neden Bülent Usta ile çalışmalısınız?</h2>
+
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      {items.map((item) => (
+        <li class="flex gap-4">
+          <span
+            class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-700"
+          >
+            <Icon name={item.icon} class="size-6" />
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-ink-900">{item.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-ink-500">{item.body}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

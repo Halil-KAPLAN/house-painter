@@ -1,0 +1,101 @@
+---
+/**
+ * Tüm sayfaların ortak iskeleti: <head> meta'ları, yapısal veri, header, footer.
+ *
+ * Her sayfa title + description vermek ZORUNDA — kopya meta etiketi
+ * arama sonuçlarında sayfaların birbirini bastırmasına yol açar.
+ */
+import '@styles/_base.css';
+
+import { SITE } from '@config/site';
+import Seo from '@components/Seo.astro';
+import JsonLd from '@components/JsonLd.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import MobileCallBar from '@components/MobileCallBar.astro';
+import WhatsappFab from '@components/WhatsappFab.astro';
+import type { Crumb } from '@components/Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  /** Sayfa yolu — hem görsel breadcrumb hem BreadcrumbList şeması için */
+  crumbs?: Crumb[];
+  /** Sayfaya özel ek JSON-LD şemaları (Service, FAQPage, ItemList…) */
+  schemas?: Record<string, unknown>[];
+  /** WhatsApp mesajını bu sayfaya göre önden doldurur, örn. "Eşyalı Ev Boyama" */
+  whatsappContext?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  noindex,
+  type,
+  crumbs = [],
+  schemas = [],
+  whatsappContext,
+} = Astro.props;
+
+// Görsel breadcrumb ile aynı veriden BreadcrumbList üret — tek kaynak
+const breadcrumbSchema =
+  crumbs.length > 0
+    ? [
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: SITE.url },
+            ...crumbs.map((c, i) => ({
+              '@type': 'ListItem',
+              position: i + 2,
+              name: c.label,
+              item: `${SITE.url}${c.href}`,
+            })),
+          ],
+        },
+      ]
+    : [];
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <Seo {title} {description} {image} {noindex} {type} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1e3a8a" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <JsonLd schemas={[...breadcrumbSchema, ...schemas]} />
+  </head>
+
+  <body>
+    <a
+      href="#icerik"
+      class="sr-only-focusable btn btn-primary absolute left-4 top-4 z-[60]"
+    >
+      İçeriğe atla
+    </a>
+
+    <Header />
+
+    <main id="icerik">
+      <slot />
+    </main>
+
+    <Footer />
+    <MobileCallBar />
+    <WhatsappFab context={whatsappContext} />
+  </body>
+</html>

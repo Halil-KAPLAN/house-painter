@@ -1,0 +1,246 @@
+---
+/**
+ * "Yaptığımız İşler" galerisi.
+ *
+ * Kategori filtresi ve büyütme (lightbox) JAVASCRIPT KULLANMADAN çalışır:
+ *   - Filtre: gizli radio input + CSS :has()
+ *   - Lightbox: :target seçicisi
+ * Böylece sayfa sıfır JS ile yüklenir; Core Web Vitals etkilenmez.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import WorkCard from '@components/WorkCard.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+import Icon from '@components/Icon.astro';
+import { WORKS, CATEGORIES } from '@data/works';
+import { SITE } from '@config/site';
+
+const crumbs = [{ label: 'Yaptığımız İşler', href: '/yaptigimiz-isler' }];
+
+const countFor = (slug: string) =>
+  slug === 'tumu' ? WORKS.length : WORKS.filter((w) => w.category === slug).length;
+
+// Galeri görsellerinin yapısal verisi — Google Görseller için
+const imageSchema = {
+  '@type': 'ImageGallery',
+  name: 'Bülent Usta — Yaptığımız Boya İşleri',
+  description:
+    'Darıca, Gebze ve Çayırova’da tamamlanan daire, dükkân ve iş yeri boyama işleri.',
+  image: WORKS.map((w) => ({
+    '@type': 'ImageObject',
+    contentUrl: `${SITE.url}${w.image.src}`,
+    name: w.title,
+    description: w.caption,
+    caption: w.alt,
+  })),
+};
+---
+
+<BaseLayout
+  title="Yaptığımız İşler | Boyacı Referansları — Bülent Usta"
+  description="Darıca, Gebze ve Çayırova'da tamamladığımız daire, dükkân ve iş yeri boyama işleri. Eşyalı ev boyama, alçı-saten ve dekoratif uygulama örnekleri."
+  {crumbs}
+  schemas={[imageSchema]}
+>
+  <PageHeader
+    eyebrow="Referanslarımız"
+    heading="Yaptığımız İşler"
+    lead="Darıca ve çevresinde tamamladığımız işlerden bir bölümü. Sadece bitmiş hâlleri değil, hazırlık ve uygulama aşamalarını da koyduk — işin nasıl yapıldığı en az sonucu kadar önemli."
+    {crumbs}
+  />
+
+  <section class="section-tight" id="galeri">
+    <div class="container-content">
+      {/* Gizli radio'lar — filtrenin durumunu tutar */}
+      <div class="sr-only">
+        {CATEGORIES.map((cat, i) => (
+          <input
+            type="radio"
+            name="galeri-filtre"
+            id={`filtre-${cat.slug}`}
+            checked={i === 0}
+          />
+        ))}
+      </div>
+
+      {/* Filtre butonları */}
+      <div class="flex flex-wrap gap-2.5" role="group" aria-label="Kategori filtresi">
+        {CATEGORIES.map((cat) => (
+          <label
+            for={`filtre-${cat.slug}`}
+            class="filtre-etiket inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-pill border border-ink-200 bg-white px-4 py-2 text-sm font-semibold text-ink-600 transition-colors hover:border-brand-300 hover:bg-brand-50"
+          >
+            {cat.label}
+            <span class="text-xs font-bold text-ink-500 tabular-nums">
+              {countFor(cat.slug)}
+            </span>
+          </label>
+        ))}
+      </div>
+
+      {/* Görünmez h2 — h1'den kartların h3'üne atlamayı engeller */}
+      <h2 class="sr-only">Tamamlanan iş örnekleri</h2>
+
+      {/* Galeri ızgarası */}
+      <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {WORKS.map((work, i) => (
+          <li data-kategori={work.category}>
+            <WorkCard {work} lightbox loading={i < 3 ? 'eager' : 'lazy'} />
+          </li>
+        ))}
+      </ul>
+
+      <p class="mt-8 text-sm text-ink-500">
+        Toplam {WORKS.length} iş gösteriliyor. Görsele dokunarak büyütebilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  {/* Lightbox katmanları — :target ile açılır, JS yok */}
+  {WORKS.map((work) => (
+    <div
+      id={`buyut-${work.id}`}
+      class="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={work.title}
+    >
+      <a href="#galeri" class="lightbox-arkaplan" aria-label="Büyütmeyi kapat"></a>
+
+      <figure class="lightbox-icerik">
+        {/* layout="none" — Astro'nun constrained stili max-height'i ezmesin */}
+        <Image
+          src={work.image}
+          alt={work.alt}
+          widths={[800, 1200]}
+          sizes="(min-width: 1024px) 900px, 92vw"
+          layout="none"
+          loading="lazy"
+          decoding="async"
+          class="lightbox-gorsel rounded-card shadow-card-hover"
+        />
+        <figcaption class="mt-4 max-w-2xl shrink-0 text-center">
+          <h2 class="text-lg font-bold text-white">{work.title}</h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-white/70">{work.caption}</p>
+        </figcaption>
+      </figure>
+
+      <a
+        href="#galeri"
+        class="lightbox-kapat"
+        aria-label="Kapat"
+      >
+        <Icon name="close" class="size-6" />
+      </a>
+    </div>
+  ))}
+
+  <ContactCta
+    heading="Bu İşlerden Birini Evinizde de İsteriz Diyorsanız"
+    body="Arayın, gelip yerinde bakalım. Ne yapılması gerektiğini anlatır, net fiyat veririz."
+  />
+</BaseLayout>
+
+<style is:global>
+  /* ------------------------------------------------------------------
+     Kategori filtresi — radio + :has(), JavaScript yok
+     ------------------------------------------------------------------ */
+
+  #galeri:has(#filtre-konut:checked) li[data-kategori]:not([data-kategori='konut']),
+  #galeri:has(#filtre-isyeri:checked) li[data-kategori]:not([data-kategori='isyeri']),
+  #galeri:has(#filtre-alci-saten:checked) li[data-kategori]:not([data-kategori='alci-saten']),
+  #galeri:has(#filtre-dekoratif:checked) li[data-kategori]:not([data-kategori='dekoratif']) {
+    display: none;
+  }
+
+  /* Seçili filtrenin etiketi vurgulanır */
+  #galeri:has(#filtre-tumu:checked) label[for='filtre-tumu'],
+  #galeri:has(#filtre-konut:checked) label[for='filtre-konut'],
+  #galeri:has(#filtre-isyeri:checked) label[for='filtre-isyeri'],
+  #galeri:has(#filtre-alci-saten:checked) label[for='filtre-alci-saten'],
+  #galeri:has(#filtre-dekoratif:checked) label[for='filtre-dekoratif'] {
+    background-color: var(--color-brand-700);
+    border-color: var(--color-brand-700);
+    color: var(--color-white);
+  }
+
+  #galeri:has(#filtre-tumu:checked) label[for='filtre-tumu'] span,
+  #galeri:has(#filtre-konut:checked) label[for='filtre-konut'] span,
+  #galeri:has(#filtre-isyeri:checked) label[for='filtre-isyeri'] span,
+  #galeri:has(#filtre-alci-saten:checked) label[for='filtre-alci-saten'] span,
+  #galeri:has(#filtre-dekoratif:checked) label[for='filtre-dekoratif'] span {
+    color: color-mix(in oklch, var(--color-white) 70%, transparent);
+  }
+
+  /* Klavye ile gezinenler için: gizli radio odaklandığında etiketi belli et */
+  .sr-only input:focus-visible + * ,
+  #galeri .sr-only input:focus-visible ~ * {
+    outline: none;
+  }
+
+  /* ------------------------------------------------------------------
+     Lightbox — :target ile açılır, JavaScript yok
+     ------------------------------------------------------------------ */
+
+  .lightbox {
+    display: none;
+  }
+
+  .lightbox:target {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+
+  .lightbox-arkaplan {
+    position: absolute;
+    inset: 0;
+    background-color: oklch(0.129 0.042 265 / 0.92);
+    backdrop-filter: blur(4px);
+  }
+
+  .lightbox-icerik {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 60rem;
+    max-height: 100%;
+    min-height: 0;
+  }
+
+  /* Görsel hem yüksekliğe hem genişliğe sığsın; oranı bozulmasın.
+     12rem = üst/alt boşluk + altyazı için ayrılan pay */
+  .lightbox-gorsel {
+    max-height: calc(100dvh - 12rem);
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .lightbox-kapat {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    background-color: oklch(1 0 0 / 0.14);
+    color: var(--color-white);
+    backdrop-filter: blur(8px);
+    transition: background-color 0.2s var(--ease-out-soft);
+  }
+
+  .lightbox-kapat:hover {
+    background-color: oklch(1 0 0 / 0.26);
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+/**
+ * Sağ altta sabit duran WhatsApp butonu.
+ *
+ * Neden sadece md ve üzeri?
+ * Mobilde ekranın altında zaten [Ara] [WhatsApp] barı var (MobileCallBar).
+ * İkisi birden gösterilirse üst üste biner ve aynı işi iki kez yapar.
+ * Böylece her ekran boyutunda kalıcı bir WhatsApp erişimi olur:
+ * mobilde alt bar, tablet/masaüstünde bu buton.
+ *
+ * `context` verilirse mesaj o sayfaya göre önden doldurulur — müşteri hangi
+ * hizmet/bölge sayfasından yazdığını tekrar anlatmak zorunda kalmaz.
+ */
+import { CONTACT } from '@config/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Sayfa bağlamı, örn. "Eşyalı Ev Boyama" veya "Gebze" */
+  context?: string;
+}
+
+const { context } = Astro.props;
+
+const message = context
+  ? `Merhaba, ${context} hakkında bilgi ve fiyat almak istiyorum.`
+  : CONTACT.whatsappMessage;
+
+const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  class="whatsapp-fab group hidden md:inline-flex"
+  aria-label="WhatsApp'tan yazın"
+>
+  <span class="whatsapp-fab-ikon">
+    <Icon name="whatsapp" class="size-7" />
+  </span>
+  <span class="whatsapp-fab-metin"><span>WhatsApp'tan yazın</span></span>
+</a>
+
+<style>
+  .whatsapp-fab {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 45;
+
+    align-items: center;
+    gap: 0.75rem;
+
+    height: 3.5rem;
+    padding-inline: 0.5rem;
+    border-radius: var(--radius-pill);
+
+    background-color: var(--color-whatsapp);
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+
+    box-shadow:
+      0 4px 12px oklch(0.208 0.042 266 / 0.18),
+      0 12px 32px oklch(0.208 0.042 266 / 0.16);
+
+    transition:
+      background-color 0.25s var(--ease-out-soft),
+      box-shadow 0.25s var(--ease-out-soft),
+      padding-inline 0.3s var(--ease-out-soft);
+  }
+
+  .whatsapp-fab:hover {
+    background-color: var(--color-whatsapp-dark);
+    box-shadow:
+      0 6px 16px oklch(0.208 0.042 266 / 0.22),
+      0 16px 40px oklch(0.208 0.042 266 / 0.2);
+  }
+
+  .whatsapp-fab-ikon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Etiket varsayılan olarak kapalı — buton yuvarlak durur.
+     Üzerine gelince veya klavye ile odaklanınca açılır. */
+  .whatsapp-fab-metin {
+    display: grid;
+    grid-template-columns: 0fr;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      grid-template-columns 0.3s var(--ease-out-soft),
+      opacity 0.25s var(--ease-out-soft);
+  }
+
+  .whatsapp-fab-metin > span {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .whatsapp-fab:hover .whatsapp-fab-metin,
+  .whatsapp-fab:focus-visible .whatsapp-fab-metin {
+    grid-template-columns: 1fr;
+    opacity: 1;
+  }
+
+  .whatsapp-fab:hover,
+  .whatsapp-fab:focus-visible {
+    padding-inline: 0.5rem 1.25rem;
+  }
+
+  /* Hareket hassasiyeti: etiket her zaman açık, animasyon yok */
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab-metin {
+      grid-template-columns: 1fr;
+      opacity: 1;
+    }
+    .whatsapp-fab {
+      padding-inline: 0.5rem 1.25rem;
+    }
+  }
+</style>

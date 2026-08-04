@@ -1,0 +1,98 @@
+---
+/**
+ * Site başlığı ve ana menü.
+ * Mobil menü <details>/<summary> ile çalışır — JavaScript gerektirmez.
+ */
+import { NAV, CONTACT, phoneHref } from '@config/site';
+import Icon from './Icon.astro';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="sticky top-0 z-50 border-b border-ink-200 bg-white/95 backdrop-blur">
+  <div class="container-content">
+    <div class="flex h-16 items-center justify-between gap-4 lg:h-20">
+      {/* Marka */}
+      {/* aria-label yerine gizli metin: erişilebilir ad görünen metnin TAMAMINI
+          içerir (sesle kontrol için şart) ve bağlantının amacını da bildirir */}
+      <a href="/" class="flex min-h-11 shrink-0 items-center gap-2.5">
+        <span
+          class="flex size-10 items-center justify-center rounded-xl bg-brand-700 text-white shadow-card"
+        >
+          <Icon name="roller" class="size-5.5" />
+        </span>
+        <span class="leading-tight">
+          <span class="block text-base font-bold text-ink-900">Bülent Usta</span>
+          <span class="block text-xs font-semibold tracking-wide text-brand-600">
+            DARICA BOYACI
+          </span>
+        </span>
+        <span class="sr-only">— ana sayfa</span>
+      </a>
+
+      {/* Masaüstü menü */}
+      <nav class="hidden lg:block" aria-label="Ana menü">
+        <ul class="flex items-center gap-1">
+          {NAV.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
+                  isActive(item.href)
+                    ? 'bg-brand-50 text-brand-700'
+                    : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Masaüstü arama butonu */}
+      <a href={phoneHref} class="btn btn-primary hidden lg:inline-flex">
+        <Icon name="phone" class="size-4.5" />
+        {CONTACT.phoneDisplay}
+      </a>
+
+      {/* Mobil menü — JS yok, native <details> */}
+      <details class="group relative lg:hidden">
+        <summary
+          class="flex size-11 cursor-pointer list-none items-center justify-center rounded-lg text-ink-700 transition-colors hover:bg-ink-50 [&::-webkit-details-marker]:hidden"
+          aria-label="Menüyü aç"
+        >
+          <Icon name="menu" class="size-6 group-open:hidden" />
+          <Icon name="close" class="hidden size-6 group-open:block" />
+        </summary>
+
+        <nav
+          class="absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-card border border-ink-200 bg-white p-2 shadow-card-hover"
+          aria-label="Mobil menü"
+        >
+          <ul class="flex flex-col">
+            {NAV.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class:list={[
+                    'block rounded-lg px-3.5 py-3 text-[0.9375rem] font-semibold transition-colors',
+                    isActive(item.href)
+                      ? 'bg-brand-50 text-brand-700'
+                      : 'text-ink-700 hover:bg-ink-50',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

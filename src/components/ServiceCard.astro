@@ -1,0 +1,33 @@
+---
+import type { Service } from '@config/site';
+import Icon from './Icon.astro';
+import type { IconName } from './Icon.astro';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+---
+
+<a href={`/hizmetler/${service.slug}`} class="card card-link group">
+  <span
+    class="flex size-12 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-colors group-hover:bg-brand-100"
+  >
+    <Icon name={service.icon as IconName} class="size-6.5" />
+  </span>
+
+  <h3 class="mt-4 text-lg font-bold text-ink-900">{service.title}</h3>
+
+  <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-500">{service.summary}</p>
+
+  <span
+    class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700"
+  >
+    Detaylı bilgi
+    <Icon
+      name="arrow-right"
+      class="size-4 transition-transform group-hover:translate-x-1"
+    />
+  </span>
+</a>

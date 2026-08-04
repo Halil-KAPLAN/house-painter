@@ -1,0 +1,34 @@
+---
+/**
+ * Mobilde ekranın altına sabitlenen [Ara] / [WhatsApp] barı.
+ *
+ * Bu sitenin tek işi telefonu çaldırmak; ziyaretçi sayfanın neresinde olursa olsun
+ * arama butonu bir dokunuş uzağında olmalı. Masaüstünde gizlidir (header'da buton var).
+ *
+ * Yükseklik --spacing-callbar token'ı ile body padding'ine bağlıdır (_base.css).
+ */
+import { CONTACT, phoneHref, whatsappHref } from '@config/site';
+import Icon from './Icon.astro';
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-50 border-t border-ink-200 bg-white/95 backdrop-blur md:hidden"
+  style="box-shadow: var(--shadow-bar); padding-bottom: env(safe-area-inset-bottom);"
+>
+  <div class="grid grid-cols-2 gap-2.5 p-2.5">
+    <a href={phoneHref} class="btn btn-primary w-full text-[0.9375rem]">
+      <Icon name="phone" class="size-4.5" />
+      Hemen Ara
+    </a>
+    <a
+      href={whatsappHref}
+      target="_blank"
+      rel="noopener"
+      class="btn btn-whatsapp w-full text-[0.9375rem]"
+    >
+      <Icon name="whatsapp" class="size-4.5" />
+      WhatsApp
+    </a>
+  </div>
+  <span class="sr-only">Telefon: {CONTACT.phoneDisplayFull}</span>
+</div>

@@ -1,0 +1,108 @@
+---
+/**
+ * Footer — NAP bilgisi (İsim/Adres/Telefon) ve iç linkleme merkezi.
+ * NAP'in Google Business Profile ile birebir aynı olması yerel SEO için kritiktir.
+ */
+import { SITE, CONTACT, SERVICES, REGIONS, phoneHref, whatsappHref } from '@config/site';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-ink-200 bg-ink-50">
+  <div class="container-content section-tight">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Marka + iletişim */}
+      <div class="lg:col-span-1">
+        <div class="flex items-center gap-2.5">
+          <span
+            class="flex size-10 items-center justify-center rounded-xl bg-brand-700 text-white"
+          >
+            <Icon name="roller" class="size-5.5" />
+          </span>
+          <span class="leading-tight">
+            <span class="block text-base font-bold text-ink-900">{SITE.name}</span>
+            <span class="block text-xs font-semibold tracking-wide text-brand-600">
+              DARICA BOYACI
+            </span>
+          </span>
+        </div>
+
+        <p class="mt-4 text-sm leading-relaxed text-ink-500">
+          {SITE.shortDescription}
+        </p>
+
+        <div class="mt-5 flex flex-col gap-2.5 text-sm">
+          <a href={phoneHref} class="inline-flex items-center gap-2 font-semibold text-ink-800 hover:text-brand-700">
+            <Icon name="phone" class="size-4 text-brand-600" />
+            {CONTACT.phoneDisplayFull}
+          </a>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 font-semibold text-ink-800 hover:text-brand-700"
+          >
+            <Icon name="whatsapp" class="size-4 text-whatsapp" />
+            WhatsApp'tan yazın
+          </a>
+          <span class="inline-flex items-center gap-2 text-ink-500">
+            <Icon name="map-pin" class="size-4 text-brand-600" />
+            {CONTACT.address.district}, {CONTACT.address.city}
+          </span>
+          <span class="inline-flex items-center gap-2 text-ink-500">
+            <Icon name="clock" class="size-4 text-brand-600" />
+            {CONTACT.openingHoursDisplay}
+          </span>
+        </div>
+      </div>
+
+      {/* Hizmetler */}
+      <nav aria-labelledby="footer-hizmetler">
+        <h2 id="footer-hizmetler" class="text-sm font-bold text-ink-900">Hizmetler</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {SERVICES.map((s) => (
+            <li>
+              <a href={`/hizmetler/${s.slug}`} class="link-muted">{s.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Bölgeler */}
+      <nav aria-labelledby="footer-bolgeler">
+        <h2 id="footer-bolgeler" class="text-sm font-bold text-ink-900">Hizmet Bölgeleri</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {REGIONS.map((r) => (
+            <li>
+              <a href={`/bolgeler/${r.slug}`} class="link-muted">{r.name} Boyacı</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Kurumsal */}
+      <nav aria-labelledby="footer-kurumsal">
+        <h2 id="footer-kurumsal" class="text-sm font-bold text-ink-900">Kurumsal</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a href="/hakkimizda" class="link-muted">Hakkımızda</a></li>
+          <li><a href="/yaptigimiz-isler" class="link-muted">Yaptığımız İşler</a></li>
+          <li><a href="/sikca-sorulan-sorular" class="link-muted">Sıkça Sorulan Sorular</a></li>
+          <li><a href="/iletisim" class="link-muted">İletişim</a></li>
+        </ul>
+
+        <a href={phoneHref} class="btn btn-primary mt-6 w-full">
+          <Icon name="phone" class="size-4.5" />
+          Hemen Ara
+        </a>
+      </nav>
+    </div>
+
+    <div
+      class="mt-10 flex flex-col gap-3 border-t border-ink-200 pt-6 text-sm text-ink-500 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {SITE.legalName}. Tüm hakları saklıdır.</p>
+      <p>Darıca · Gebze · Çayırova · Tuzla · Pendik · Kartal</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,191 @@
+---
+/**
+ * Hakkımızda.
+ *
+ * NOT: Tecrübe yılı, kaç iş yapıldığı gibi rakamlar BİLEREK yazılmadı —
+ * doğrulanmış bilgi yok, uydurmak da olmaz. Bilgi gelince buraya eklenecek.
+ * docs/04-BEKLEYEN-BILGI.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+import Icon from '@components/Icon.astro';
+import { PROCESS_STEPS, REGIONS, phoneHref, CONTACT } from '@config/site';
+import satenAlci from '@assets/isler/saten-alci-uygulamasi.webp';
+
+const crumbs = [{ label: 'Hakkımızda', href: '/hakkimizda' }];
+
+const ilkeler = [
+  {
+    icon: 'shield' as const,
+    title: 'Önce koruma, sonra boya',
+    body: 'Eve girdiğimizde ilk yaptığımız şey boyamak değil, örtmek. Eşyalar toplanıp naylonla kapatılmadan, süpürgeliklere bant çekilmeden fırçaya el sürmeyiz. Boya işinin zor tarafı boyamak değil, hiçbir şeye zarar vermemektir.',
+  },
+  {
+    icon: 'trowel' as const,
+    title: 'Altı sağlam olmayan iş yapmayız',
+    body: 'Bir duvarın nasıl göründüğünü boyanın markası değil, altındaki hazırlık belirler. Yoklama yapılmamış çatlak altı ay sonra kendini gösterir, astarsız yapılan iş bir iki yıl içinde kabarır. Bu yüzden hiçbir adımı kısaltmıyoruz.',
+  },
+  {
+    icon: 'roller' as const,
+    title: 'İki kat, istisnasız',
+    body: 'Tavana iki kat, duvara iki kat. Tek kat boya duvarı kapatmaz; gündüz ışığında altındaki renk ve izler belli olur. Bu bizim standardımız ve pazarlık konusu değil.',
+  },
+  {
+    icon: 'broom' as const,
+    title: 'Temiz teslim işin parçasıdır',
+    body: 'Naylonları kaldırmak, bantları sökmek, ortalığı süpürmek ayrı bir hizmet değil, işin kendisidir. Evi geldiğimizden daha temiz bırakmayı hedefleriz.',
+  },
+];
+---
+
+<BaseLayout
+  title="Hakkımızda | Darıca Boyacı Bülent Usta"
+  description="Darıca merkezli boya ustası. İç cephe boyama, alçı ve saten uygulaması. Nasıl çalıştığımızı, hangi adımları neden atlamadığımızı anlatıyoruz."
+  {crumbs}
+>
+  <PageHeader
+    eyebrow="Hakkımızda"
+    heading="Bülent Usta — Darıca Boyacı"
+    lead="Darıca merkezli çalışıyoruz. İç cephe boyama, alçı ve saten uygulaması yapıyoruz. Aşağıda işin reklamını değil, nasıl yapıldığını anlattık — asıl fark orada."
+    {crumbs}
+  />
+
+  <section class="section">
+    <div class="container-content">
+      <div class="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <div class="prose-body">
+          <h2 class="!mt-0">Ne iş yapıyoruz?</h2>
+          <p>
+            Ev ve iş yeri boyama işleri yapıyoruz. Bir daireyi baştan sona alabildiğimiz
+            gibi, sadece tek bir odanın boyanması ya da yalnızca alçı-saten çekilmesi de
+            olabilir.
+          </p>
+          <p>
+            Merkezimiz Darıca. Gebze ve Çayırova'da yoğun çalışıyoruz; Marmaray hattı
+            boyunca Tuzla, Pendik ve Kartal'a da geliyoruz.
+          </p>
+
+          <h2>En çok yaptığımız iş: dolu daire</h2>
+          <p>
+            Gelen işlerin büyük kısmı içinde oturulan dairelerde oluyor. Çoğu insan
+            “eşyaları nereye koyacağım” diye düşünüp boya işini erteliyor. Ertelemeye
+            gerek yok — dolu dairede çalışmanın düzgün bir yöntemi var ve biz o yöntemle
+            çalışıyoruz.
+          </p>
+          <p>
+            Eşyalar odanın ortasına toplanır, mavi naylonla örtülür. Süpürgeliklere kâğıt
+            bant çekilir, parke ve zemin kapatılır. Oda oda ilerlediğimiz için evde
+            kalmaya devam edebilirsiniz.
+          </p>
+
+          <h2>Neden bu kadar adım anlatıyoruz?</h2>
+          <p>
+            Çünkü boya işinde fiyatı da kaliteyi de belirleyen şey görünmeyen kısımlardır.
+            Bir usta size “iki günde bitiririm” diyorsa, muhtemelen yoklamayı ya da
+            astarı atlıyordur. Biz hangi adımı neden yaptığımızı baştan anlatıyoruz ki
+            karşılaştırma yapabilesiniz.
+          </p>
+        </div>
+
+        <div class="lg:sticky lg:top-24">
+          <Image
+            src={satenAlci}
+            alt="Bülent Usta iş yerinde mala ile saten alçı uygularken"
+            widths={[500, 900]}
+            sizes="(min-width: 1024px) 480px, 92vw"
+            loading="lazy"
+            decoding="async"
+            class="w-full rounded-card object-cover shadow-card"
+          />
+          <p class="mt-3 text-sm text-ink-500">
+            Saten alçı uygulaması — yüzeyin pürüzsüz olması bu katmana bağlı.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Çalışma ilkeleri */}
+  <section class="section bg-ink-50">
+    <div class="container-content">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Çalışma ilkelerimiz</span>
+        <h2 class="section-title">Bizim İçin Değişmeyen Dört Şey</h2>
+      </div>
+
+      <div class="mt-10 grid gap-5 sm:grid-cols-2">
+        {ilkeler.map((ilke) => (
+          <div class="card">
+            <span
+              class="flex size-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700"
+            >
+              <Icon name={ilke.icon} class="size-6" />
+            </span>
+            <h3 class="mt-4 text-base font-bold text-ink-900">{ilke.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-500">{ilke.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Süreç özeti */}
+  <section class="section">
+    <div class="container-content">
+      <div class="grid gap-10 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-16">
+        <div>
+          <span class="eyebrow">Kısaca</span>
+          <h2 class="section-title">Dokuz Adımda İş</h2>
+          <p class="section-lead">
+            Her işte aynı sıra. Detaylı anlatım ana sayfadaki çalışma süreci bölümünde.
+          </p>
+          <a href={phoneHref} class="btn btn-primary mt-6">
+            <Icon name="phone" class="size-4.5" />
+            {CONTACT.phoneDisplay}
+          </a>
+        </div>
+
+        <ol class="space-y-3.5">
+          {PROCESS_STEPS.map((step, i) => (
+            <li class="flex gap-3.5">
+              <span
+                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-xs font-bold text-brand-700 tabular-nums"
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <span class="text-[0.9375rem] leading-relaxed text-ink-600">
+                <strong class="font-semibold text-ink-900">{step.title}.</strong>{' '}
+                {step.body}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* Bölgeler */}
+  <section class="section-tight border-t border-ink-200 bg-ink-50">
+    <div class="container-content">
+      <h2 class="text-lg font-bold text-ink-900">Hizmet verdiğimiz bölgeler</h2>
+      <ul class="mt-4 flex flex-wrap gap-2.5">
+        {REGIONS.map((r) => (
+          <li>
+            <a
+              href={`/bolgeler/${r.slug}`}
+              class="badge bg-white transition-colors hover:border-brand-300 hover:bg-brand-100"
+            >
+              <Icon name="map-pin" class="size-3.5" />
+              {r.name} Boyacı
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>

@@ -1,0 +1,179 @@
+---
+/**
+ * İletişim.
+ *
+ * Bilerek iletişim FORMU yok: form gönderimi sunucu/servis gerektirir ve statik
+ * sitede ek bağımlılık demektir. Ayrıca bu işte müşteri formu doldurmak yerine
+ * doğrudan arıyor. Telefon ve WhatsApp öne çıkarıldı.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import Icon from '@components/Icon.astro';
+import { CONTACT, REGIONS, SERVICES, phoneHref, whatsappHref } from '@config/site';
+
+const crumbs = [{ label: 'İletişim', href: '/iletisim' }];
+
+const contactSchema = {
+  '@type': 'ContactPage',
+  name: 'İletişim — Bülent Usta Darıca Boyacı',
+  description: 'Boya ve alçı işleri için telefon ve WhatsApp iletişim bilgileri.',
+};
+---
+
+<BaseLayout
+  title="İletişim | Darıca Boyacı Bülent Usta — 0537 525 21 20"
+  description="Boya ve alçı işleriniz için arayın. Darıca, Gebze, Çayırova ve çevresinde ücretsiz keşif. Telefon: 0537 525 21 20, WhatsApp'tan da yazabilirsiniz."
+  {crumbs}
+  schemas={[contactSchema]}
+>
+  <PageHeader
+    eyebrow="Bize ulaşın"
+    heading="İletişim"
+    lead="En hızlı yol telefon. Arayın, işin ne olduğunu anlatın; gerekirse gelip yerinde bakalım. Keşif ücretsiz."
+    {crumbs}
+  />
+
+  <section class="section">
+    <div class="container-content">
+      <div class="grid gap-8 lg:grid-cols-3">
+        {/* Telefon */}
+        <a href={phoneHref} class="card card-link group border-accent-200 bg-accent-50">
+          <span
+            class="flex size-12 items-center justify-center rounded-xl bg-accent-600 text-white"
+          >
+            <Icon name="phone" class="size-6" />
+          </span>
+          <h2 class="mt-4 text-lg font-bold text-ink-900">Telefon</h2>
+          <p class="mt-1.5 flex-1 text-sm leading-relaxed text-ink-600">
+            En hızlısı bu. Çalışırken telefonu her zaman açamayabiliriz; cevap
+            veremezsek geri döneriz.
+          </p>
+          <span class="mt-4 text-xl font-bold text-accent-700">
+            {CONTACT.phoneDisplayFull}
+          </span>
+        </a>
+
+        {/* WhatsApp */}
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener"
+          class="card card-link group"
+          style="border-color: color-mix(in oklch, var(--color-whatsapp) 35%, transparent);"
+        >
+          <span
+            class="flex size-12 items-center justify-center rounded-xl text-white"
+            style="background-color: var(--color-whatsapp);"
+          >
+            <Icon name="whatsapp" class="size-6" />
+          </span>
+          <h2 class="mt-4 text-lg font-bold text-ink-900">WhatsApp</h2>
+          <p class="mt-1.5 flex-1 text-sm leading-relaxed text-ink-600">
+            Duvarın fotoğrafını çekip gönderin — ne yapılması gerektiği hakkında
+            önden fikir verebiliriz.
+          </p>
+          <span class="mt-4 inline-flex items-center gap-1.5 font-bold text-ink-900">
+            Mesaj gönder
+            <Icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </a>
+
+        {/* Bölge & saat */}
+        <div class="card card-muted">
+          <span
+            class="flex size-12 items-center justify-center rounded-xl bg-brand-700 text-white"
+          >
+            <Icon name="map-pin" class="size-6" />
+          </span>
+          <h2 class="mt-4 text-lg font-bold text-ink-900">Çalışma bölgesi ve saatler</h2>
+
+          <dl class="mt-4 space-y-3.5 text-sm">
+            <div>
+              <dt class="font-semibold text-ink-900">Merkez</dt>
+              <dd class="text-ink-600">
+                {CONTACT.address.district}, {CONTACT.address.city}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-900">Çalışma saatleri</dt>
+              <dd class="text-ink-600">{CONTACT.openingHoursDisplay}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-900">Keşif</dt>
+              <dd class="text-ink-600">Ücretsiz, yerinde</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      {/* Aramadan önce hazırlayın */}
+      <div class="mt-10 rounded-card border border-brand-100 bg-brand-50 p-6 sm:p-8">
+        <h2 class="text-lg font-bold text-ink-900">Ararken bunları söylerseniz iyi olur</h2>
+        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600">
+          Telefonda daha net konuşabilmemiz için işin kabaca ne olduğunu bilmemiz yeter.
+          Emin olmadığınız yerleri boş bırakın, keşifte zaten bakacağız.
+        </p>
+
+        <ul class="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            'Hangi ilçe ve mahalledesiniz',
+            'Kaç odalı, yaklaşık kaç metrekare',
+            'Ev dolu mu, boş mu',
+            'Sadece boya mı, alçı da gerekiyor mu',
+          ].map((item) => (
+            <li class="flex items-start gap-2.5 text-sm text-ink-700">
+              <Icon name="check" class="mt-0.5 size-4 shrink-0 text-brand-600" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a href={phoneHref} class="btn btn-primary">
+            <Icon name="phone" class="size-4.5" />
+            {CONTACT.phoneDisplayFull}
+          </a>
+          <a href={whatsappHref} target="_blank" rel="noopener" class="btn btn-whatsapp">
+            <Icon name="whatsapp" class="size-4.5" />
+            WhatsApp'tan yaz
+          </a>
+        </div>
+      </div>
+
+      {/* İç linkleme */}
+      <div class="mt-12 grid gap-8 sm:grid-cols-2">
+        <div>
+          <h2 class="text-base font-bold text-ink-900">Hizmet bölgelerimiz</h2>
+          <ul class="mt-3.5 flex flex-wrap gap-2">
+            {REGIONS.map((r) => (
+              <li>
+                <a
+                  href={`/bolgeler/${r.slug}`}
+                  class="badge transition-colors hover:border-brand-300 hover:bg-brand-100"
+                >
+                  {r.name} Boyacı
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-ink-900">Hizmetlerimiz</h2>
+          <ul class="mt-3.5 flex flex-wrap gap-2">
+            {SERVICES.map((s) => (
+              <li>
+                <a
+                  href={`/hizmetler/${s.slug}`}
+                  class="badge transition-colors hover:border-brand-300 hover:bg-brand-100"
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

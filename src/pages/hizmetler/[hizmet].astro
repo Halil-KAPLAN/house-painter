@@ -1,0 +1,184 @@
+---
+/**
+ * Hizmet detay sayfası — tek şablon, 7 sayfa üretir.
+ * İçerik src/config/site.ts → SERVICES dizisinden gelir.
+ */
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import RelatedWorks from '@components/RelatedWorks.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+import Icon from '@components/Icon.astro';
+import type { IconName } from '@components/Icon.astro';
+import {
+  SERVICES,
+  REGIONS,
+  SITE,
+  AREA_SERVED,
+  PROCESS_STEPS,
+  phoneHref,
+  CONTACT,
+} from '@config/site';
+
+export const getStaticPaths = (() =>
+  SERVICES.map((service) => ({
+    params: { hizmet: service.slug },
+    props: { service },
+  }))) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+
+const crumbs = [
+  { label: 'Hizmetler', href: '/hizmetler' },
+  { label: service.title, href: `/hizmetler/${service.slug}` },
+];
+
+const serviceSchema = {
+  '@type': 'Service',
+  name: service.heading,
+  description: service.metaDescription,
+  serviceType: service.title,
+  url: `${SITE.url}/hizmetler/${service.slug}`,
+  provider: { '@id': `${SITE.url}/#boyaci` },
+  areaServed: AREA_SERVED.map((name) => ({ '@type': 'City', name })),
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    servicePhone: { '@type': 'ContactPoint', telephone: CONTACT.phone },
+  },
+};
+
+// Diğer hizmetler — iç linkleme
+const otherServices = SERVICES.filter((s) => s.slug !== service.slug).slice(0, 4);
+---
+
+<BaseLayout
+  title={`${service.metaTitle} — Bülent Usta`}
+  description={service.metaDescription}
+  {crumbs}
+  schemas={[serviceSchema]}
+  whatsappContext={service.title}
+>
+  <PageHeader eyebrow="Hizmetlerimiz" heading={service.heading} lead={service.intro} {crumbs}>
+    <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+      <a href={phoneHref} class="btn btn-primary">
+        <Icon name="phone" class="size-4.5" />
+        Ücretsiz keşif için ara
+      </a>
+      <a href="/yaptigimiz-isler" class="btn btn-outline bg-white">
+        Yaptığımız işlere bak
+      </a>
+    </div>
+  </PageHeader>
+
+  {/* Ana içerik + yan sütun */}
+  <section class="section">
+    <div class="container-content">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+        {/* Ana metin */}
+        <div class="prose-body">
+          {service.sections.map((section) => (
+            <>
+              <h2>{section.heading}</h2>
+              {section.body.map((p) => <p>{p}</p>)}
+            </>
+          ))}
+
+          <h2>Nasıl ilerliyoruz?</h2>
+          <p>
+            Her işte aynı sırayı izliyoruz. Adımların hiçbiri kısaltılmıyor — kalite
+            boyanın markasında değil, bu sıranın bozulmamasında.
+          </p>
+          <ol class="mt-6 space-y-4 not-prose">
+            {PROCESS_STEPS.map((step, i) => (
+              <li class="flex gap-3.5">
+                <span
+                  class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-xs font-bold text-brand-700 tabular-nums"
+                  aria-hidden="true"
+                >
+                  {i + 1}
+                </span>
+                <span class="text-[0.9375rem] leading-relaxed text-ink-600">
+                  <strong class="font-semibold text-ink-900">{step.title}.</strong>{' '}
+                  {step.body}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Yan sütun */}
+        <aside class="flex flex-col gap-6 lg:sticky lg:top-24 lg:self-start">
+          {/* İletişim kartı */}
+          <div class="card border-brand-200 bg-brand-50">
+            <span
+              class="flex size-11 items-center justify-center rounded-xl bg-brand-700 text-white"
+            >
+              <Icon name={service.icon as IconName} class="size-6" />
+            </span>
+            <h2 class="mt-4 text-base font-bold text-ink-900">
+              {service.title} için fiyat almak ister misiniz?
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-600">
+              Keşif ücretsiz. Gelir, yerinde bakar, ne yapılması gerektiğini anlatır
+              ve net fiyat veririz.
+            </p>
+            <a href={phoneHref} class="btn btn-primary mt-5 w-full">
+              <Icon name="phone" class="size-4.5" />
+              {CONTACT.phoneDisplay}
+            </a>
+          </div>
+
+          {/* Bölgeler — iç linkleme */}
+          <div class="card">
+            <h2 class="text-base font-bold text-ink-900">Hangi bölgelerde?</h2>
+            <ul class="mt-3.5 flex flex-wrap gap-2">
+              {REGIONS.map((region) => (
+                <li>
+                  <a
+                    href={`/bolgeler/${region.slug}`}
+                    class="badge transition-colors hover:border-brand-300 hover:bg-brand-100"
+                  >
+                    {region.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Diğer hizmetler — iç linkleme */}
+          <div class="card">
+            <h2 class="text-base font-bold text-ink-900">Diğer hizmetler</h2>
+            <ul class="mt-3.5 space-y-1">
+              {otherServices.map((other) => (
+                <li>
+                  <a
+                    href={`/hizmetler/${other.slug}`}
+                    class="flex items-center justify-between gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-50 hover:text-brand-700"
+                  >
+                    {other.title}
+                    <Icon name="arrow-right" class="size-4 shrink-0 text-ink-300" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="/hizmetler"
+              class="mt-1 inline-flex min-h-11 items-center gap-1.5 px-3 text-sm font-semibold text-brand-700"
+            >
+              Tüm hizmetler
+              <Icon name="arrow-right" class="size-4" />
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <RelatedWorks
+    ids={service.workIds}
+    heading={`${service.title} — Örnek İşler`}
+    lead="Bu hizmet kapsamında tamamladığımız işlerden birkaçı."
+  />
+
+  <ContactCta />
+</BaseLayout>

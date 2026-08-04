@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import TrustStrip from '@components/sections/TrustStrip.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
+import ProcessTimeline from '@components/sections/ProcessTimeline.astro';
+import WorkPreview from '@components/sections/WorkPreview.astro';
+import RegionsGrid from '@components/sections/RegionsGrid.astro';
+import Faq from '@components/sections/Faq.astro';
+import ContactCta from '@components/sections/ContactCta.astro';
+import { FAQS } from '@config/site';
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="Darıca Boyacı | Ev ve Daire Boyama — Bülent Usta"
+  description="Darıca, Gebze ve Çayırova'da boya ustası. İç cephe boyama, alçı ve saten uygulaması, eşyalı ev boyama. Ücretsiz keşif, tertemiz teslim. 0537 525 21 20."
+  schemas={[faqSchema]}
+>
+  <Hero />
+  <TrustStrip />
+  <ServicesGrid />
+  <ProcessTimeline />
+  <WorkPreview />
+  <RegionsGrid />
+  <Faq />
+  <ContactCta />
+</BaseLayout>

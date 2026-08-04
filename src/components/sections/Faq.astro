@@ -1,0 +1,60 @@
+---
+/**
+ * Sıkça sorulan sorular.
+ * <details>/<summary> ile açılır-kapanır — JavaScript yok.
+ * FAQPage şeması sayfa tarafından ayrı verilir (aynı FAQS kaynağından).
+ */
+import { FAQS } from '@config/site';
+import Icon from '../Icon.astro';
+
+interface Props {
+  showHeader?: boolean;
+  as?: 'h2' | 'h3';
+  /** Kaç soru gösterilsin (ana sayfada hepsi, isteğe göre kısaltılabilir) */
+  limit?: number;
+  background?: boolean;
+}
+
+const {
+  showHeader = true,
+  as: Heading = 'h2',
+  limit,
+  background = false,
+}: Props = Astro.props;
+
+const items = limit ? FAQS.slice(0, limit) : FAQS;
+---
+
+<section class:list={['section', background && 'bg-ink-50']} id="sss">
+  <div class="container-content">
+    {showHeader && (
+      <div class="max-w-2xl">
+        <span class="eyebrow">Merak edilenler</span>
+        <Heading class="section-title">Sıkça Sorulan Sorular</Heading>
+        <p class="section-lead">
+          En çok sorulan sorular ve dürüst cevapları. Aradığınızı bulamazsanız arayın,
+          telefonda anlatalım.
+        </p>
+      </div>
+    )}
+
+    <div class="mt-10 max-w-3xl divide-y divide-ink-200 rounded-card border border-ink-200 bg-white">
+      {items.map((faq, i) => (
+        <details class="group" name="sss" open={i === 0}>
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-left font-semibold text-ink-900 transition-colors hover:bg-ink-50 [&::-webkit-details-marker]:hidden"
+          >
+            <span class="text-[1.0625rem]">{faq.q}</span>
+            <Icon
+              name="chevron-down"
+              class="size-5 shrink-0 text-brand-600 transition-transform duration-300 group-open:rotate-180"
+            />
+          </summary>
+          <div class="px-5 pb-5 text-[0.9375rem] leading-relaxed text-ink-600">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
