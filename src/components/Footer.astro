@@ -9,7 +9,7 @@ import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-ink-200 bg-ink-50">
+<footer class="border-t border-sand-200 bg-sand-100">
   <div class="container-content section-tight">
     <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       {/* Marka + iletişim */}
@@ -28,7 +28,7 @@ const year = new Date().getFullYear();
           </span>
         </div>
 
-        <p class="mt-4 text-sm leading-relaxed text-ink-500">
+        <p class="mt-4 text-sm leading-relaxed text-ink-600">
           {SITE.shortDescription}
         </p>
 
@@ -46,13 +46,9 @@ const year = new Date().getFullYear();
             <Icon name="whatsapp" class="size-4 text-whatsapp" />
             WhatsApp'tan yazın
           </a>
-          <span class="inline-flex items-center gap-2 text-ink-500">
+          <span class="inline-flex items-center gap-2 text-ink-600">
             <Icon name="map-pin" class="size-4 text-brand-600" />
             {CONTACT.address.district}, {CONTACT.address.city}
-          </span>
-          <span class="inline-flex items-center gap-2 text-ink-500">
-            <Icon name="clock" class="size-4 text-brand-600" />
-            {CONTACT.openingHoursDisplay}
           </span>
         </div>
       </div>
@@ -99,7 +95,7 @@ const year = new Date().getFullYear();
     </div>
 
     <div
-      class="mt-10 flex flex-col gap-3 border-t border-ink-200 pt-6 text-sm text-ink-500 sm:flex-row sm:items-center sm:justify-between"
+      class="mt-10 flex flex-col gap-3 border-t border-sand-200 pt-6 text-sm text-ink-600 sm:flex-row sm:items-center sm:justify-between"
     >
       <p>© {year} {SITE.legalName}. Tüm hakları saklıdır.</p>
       <p>Darıca · Gebze · Çayırova · Tuzla · Pendik · Kartal</p>

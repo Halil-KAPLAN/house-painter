@@ -25,7 +25,7 @@ const {
 const items = limit ? FAQS.slice(0, limit) : FAQS;
 ---
 
-<section class:list={['section', background && 'bg-ink-50']} id="sss">
+<section class:list={['section', background && 'bg-sand-100']} id="sss">
   <div class="container-content">
     {showHeader && (
       <div class="max-w-2xl">
@@ -38,11 +38,11 @@ const items = limit ? FAQS.slice(0, limit) : FAQS;
       </div>
     )}
 
-    <div class="mt-10 max-w-3xl divide-y divide-ink-200 rounded-card border border-ink-200 bg-white">
+    <div class="mt-10 max-w-3xl divide-y divide-sand-200 rounded-card border border-sand-200 bg-white">
       {items.map((faq, i) => (
         <details class="group" name="sss" open={i === 0}>
           <summary
-            class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-left font-semibold text-ink-900 transition-colors hover:bg-ink-50 [&::-webkit-details-marker]:hidden"
+            class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-left font-semibold text-ink-900 transition-colors hover:bg-sand-100 [&::-webkit-details-marker]:hidden"
           >
             <span class="text-[1.0625rem]">{faq.q}</span>
             <Icon

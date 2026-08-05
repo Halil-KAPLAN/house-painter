@@ -24,7 +24,7 @@ const wrapperProps = lightbox
 ---
 
 <figure class="card group relative overflow-hidden p-0">
-  <Wrapper {...wrapperProps} class="block overflow-hidden bg-ink-100">
+  <Wrapper {...wrapperProps} class="block overflow-hidden bg-sand-200">
     <Image
       src={work.image}
       alt={work.alt}
@@ -47,6 +47,6 @@ const wrapperProps = lightbox
 
   <figcaption class="flex flex-1 flex-col p-5">
     <h3 class="text-base font-bold text-ink-900">{work.title}</h3>
-    <p class="mt-1.5 text-sm leading-relaxed text-ink-500">{work.caption}</p>
+    <p class="mt-1.5 text-sm leading-relaxed text-ink-600">{work.caption}</p>
   </figcaption>
 </figure>

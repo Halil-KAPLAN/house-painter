@@ -46,12 +46,6 @@ const business: Record<string, unknown> = {
   paymentAccepted: 'Nakit, Havale/EFT',
   address,
   areaServed: AREA_SERVED.map((name) => ({ '@type': 'City', name })),
-  openingHoursSpecification: CONTACT.openingHours.map((h) => ({
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: h.days,
-    opens: h.opens,
-    closes: h.closes,
-  })),
   knowsLanguage: 'tr',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -67,6 +61,17 @@ const business: Record<string, unknown> = {
     })),
   },
 };
+
+// Çalışma saatleri sadece GERÇEKTEN tanımlıysa şemaya girer.
+// Uydurma saat, Google'a yanlış bilgi vermek demektir.
+if (CONTACT.openingHours.length > 0) {
+  business.openingHoursSpecification = CONTACT.openingHours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  }));
+}
 
 if (CONTACT.geo) {
   business.geo = {

@@ -59,6 +59,23 @@
   --color-accent-900: oklch(0.385 0.11 39);
 
   /* ---------------------------------------------------------------------
+     Renk — Kum/bej yüzeyler (sayfanın ZEMİN rengi)
+
+     Beyaz yerine sıcak bir kum tonu kullanılıyor: boya-badana işine yakışıyor,
+     ekranda beyazdan daha yumuşak duruyor ve beyaz kartların öne çıkmasını sağlıyor.
+
+     Sitenin zemin rengini değiştirmek için SADECE bu dört değeri değiştirin;
+     tüm sayfalara yansır.
+
+     ⚠️ Bu tonları koyulaştırırsanız üzerlerindeki metin kontrastı düşer.
+        Değişiklikten sonra `npm run build` + Lighthouse ile kontrol edin.
+     --------------------------------------------------------------------- */
+  --color-sand-50: oklch(0.975 0.009 85); /* sayfa zemini */
+  --color-sand-100: oklch(0.955 0.017 84); /* dönüşümlü bölümler, hover */
+  --color-sand-200: oklch(0.915 0.025 83); /* kenarlıklar, ayraçlar */
+  --color-sand-300: oklch(0.855 0.032 82); /* daha belirgin kenarlık */
+
+  /* ---------------------------------------------------------------------
      Renk — Metin ve yüzey grileri (hafif mavi tonlu, soğuk beyaz)
      --------------------------------------------------------------------- */
   --color-ink-50: oklch(0.984 0.003 248);
@@ -143,7 +160,9 @@
   }
 
   body {
-    background-color: var(--color-white);
+    /* Sayfanın zemin rengi — beyaz değil, sıcak kum tonu.
+       Değiştirmek için @theme içindeki --color-sand-50 yeterli. */
+    background-color: var(--color-sand-50);
     color: var(--color-ink-700);
     font-family: var(--font-sans);
     line-height: 1.65;
@@ -312,11 +331,12 @@
 
   /* --- Kartlar -------------------------------------------------------- */
 
+  /* Kartlar BEYAZ kalır — kum zemin üzerinde öne çıkmalarını bu sağlıyor. */
   .card {
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
-    border: 1px solid var(--color-ink-200);
+    border: 1px solid var(--color-sand-200);
     border-radius: var(--radius-card);
     padding: 1.5rem;
     box-shadow: var(--shadow-card);
@@ -333,8 +353,8 @@
   }
 
   .card-muted {
-    background-color: var(--color-ink-50);
-    border-color: var(--color-ink-200);
+    background-color: var(--color-sand-100);
+    border-color: var(--color-sand-200);
     box-shadow: none;
   }
 
@@ -427,8 +447,9 @@
 
   /* --- Bağlantı listesi (footer, mahalle listeleri) -------------------- */
 
+  /* ink-500 kum zemin üzerinde 4.18:1 kalıyor (AA için 4.5 gerek) → ink-600 */
   .link-muted {
-    color: var(--color-ink-500);
+    color: var(--color-ink-600);
     transition: color 0.15s var(--ease-out-soft);
   }
 

@@ -69,10 +69,12 @@ const imageSchema = {
         {CATEGORIES.map((cat) => (
           <label
             for={`filtre-${cat.slug}`}
-            class="filtre-etiket inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-pill border border-ink-200 bg-white px-4 py-2 text-sm font-semibold text-ink-600 transition-colors hover:border-brand-300 hover:bg-brand-50"
+            class="filtre-etiket inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-pill border border-sand-200 bg-white px-4 py-2 text-sm font-semibold text-ink-600 transition-colors hover:border-brand-300 hover:bg-brand-50"
           >
-            {cat.label}
-            <span class="text-xs font-bold text-ink-500 tabular-nums">
+            {cat.label}{' '}
+            {/* {' '} görünümü etkilemez (flex'te boşluk düğümü render edilmez) ama
+                metin kopyalandığında "Alçı & Saten2" yerine "Alçı & Saten 2" verir */}
+            <span class="text-xs font-bold text-ink-600 tabular-nums">
               {countFor(cat.slug)}
             </span>
           </label>
@@ -91,7 +93,7 @@ const imageSchema = {
         ))}
       </ul>
 
-      <p class="mt-8 text-sm text-ink-500">
+      <p class="mt-8 text-sm text-ink-600">
         Toplam {WORKS.length} iş gösteriliyor. Görsele dokunarak büyütebilirsiniz.
       </p>
     </div>

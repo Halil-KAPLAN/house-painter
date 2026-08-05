@@ -10,7 +10,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 
-<header class="sticky top-0 z-50 border-b border-ink-200 bg-white/95 backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-sand-200 bg-sand-50/90 backdrop-blur">
   <div class="container-content">
     <div class="flex h-16 items-center justify-between gap-4 lg:h-20">
       {/* Marka */}
@@ -43,7 +43,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
                   'block rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
                   isActive(item.href)
                     ? 'bg-brand-50 text-brand-700'
-                    : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900',
+                    : 'text-ink-600 hover:bg-sand-100 hover:text-ink-900',
                 ]}
               >
                 {item.label}
@@ -62,7 +62,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       {/* Mobil menü — JS yok, native <details> */}
       <details class="group relative lg:hidden">
         <summary
-          class="flex size-11 cursor-pointer list-none items-center justify-center rounded-lg text-ink-700 transition-colors hover:bg-ink-50 [&::-webkit-details-marker]:hidden"
+          class="flex size-11 cursor-pointer list-none items-center justify-center rounded-lg text-ink-700 transition-colors hover:bg-sand-100 [&::-webkit-details-marker]:hidden"
           aria-label="Menüyü aç"
         >
           <Icon name="menu" class="size-6 group-open:hidden" />
@@ -70,7 +70,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
         </summary>
 
         <nav
-          class="absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-card border border-ink-200 bg-white p-2 shadow-card-hover"
+          class="absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-card border border-sand-200 bg-white p-2 shadow-card-hover"
           aria-label="Mobil menü"
         >
           <ul class="flex flex-col">
@@ -83,7 +83,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
                     'block rounded-lg px-3.5 py-3 text-[0.9375rem] font-semibold transition-colors',
                     isActive(item.href)
                       ? 'bg-brand-50 text-brand-700'
-                      : 'text-ink-700 hover:bg-ink-50',
+                      : 'text-ink-700 hover:bg-sand-100',
                   ]}
                 >
                   {item.label}

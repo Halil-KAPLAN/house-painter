@@ -9,6 +9,7 @@
  *   5. Bölge sayfaları birbirinin kopyası mı (doorway page denetimi)
  *   6. JSON-LD geçerli JSON mu
  *   7. İç bağlantılar kırık mı (var olmayan sayfaya link)
+ *   8. Satır içi etiketlerin etrafında boşluk kaybolmuş mu ("detay?Çünkü" gibi)
  *
  * Çalıştırma: npm run seo
  */
@@ -73,6 +74,8 @@ async function main() {
 
     const page = {
       url: url === '/' ? '/' : url.replace(/\/$/, ''),
+      /** Ham HTML — sonraki kontroller yeniden okumasın (404 gibi dosya adları farklı olabilir) */
+      raw: html,
       title: pick(html, /<title>([^<]*)<\/title>/i),
       desc: pick(html, /<meta name="description" content="([^"]*)"/i),
       canonical: pick(html, /<link rel="canonical" href="([^"]*)"/i),
@@ -166,6 +169,26 @@ async function main() {
       const target = raw.split('#')[0].split('?')[0].replace(/\/$/, '') || '/';
       if (known.has(target) || staticFiles.has(target)) continue;
       problems.push(`${p.url} — kırık iç bağlantı: ${raw}`);
+    }
+  }
+
+  // 8 — satır içi etiket etrafında kaybolan boşluk
+  //
+  // Astro, `</strong>` ile sonraki satırdaki metin arasındaki satır sonunu kırpar;
+  // sonuç "detay?Çünkü" gibi bitişik çıkar. Çözüm: etiketten sonra {' '} koymak.
+  //
+  // Sadece düz metin içinde kullanılan etiketler taranır. `span` bilerek DIŞARIDA:
+  // rozet/sayaç gibi flex çocuklarında kullanılıyor ve orada boşluğu `gap` veriyor.
+  const INLINE = 'strong|em|b|i|a|code|small';
+  const YAPISIK_KAPANIS = new RegExp(`</(?:${INLINE})>(?=[A-Za-zÇĞİÖŞÜçğıöşü0-9])`, 'g');
+  const YAPISIK_ACILIS = new RegExp(`[A-Za-zÇĞİÖŞÜçğıöşü0-9](?=<(?:${INLINE})[ >])`, 'g');
+
+  for (const p of pages) {
+    for (const re of [YAPISIK_KAPANIS, YAPISIK_ACILIS]) {
+      for (const m of p.raw.matchAll(re)) {
+        const parca = p.raw.slice(Math.max(0, m.index - 45), m.index + 45).replace(/\s+/g, ' ');
+        problems.push(`${p.url} — satır içi etikette boşluk kaybolmuş: …${parca}…`);
+      }
     }
   }
 

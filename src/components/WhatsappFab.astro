@@ -49,10 +49,15 @@ const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(messag
     z-index: 45;
 
     align-items: center;
-    gap: 0.75rem;
+
+    /* Kapalıyken TAM DAİRE: genişlik = yükseklik = 3.5rem.
+       Bunun için gap ve padding sıfır; tüm genişliği ikon kutusu doldurur.
+       Metnin soluna gereken boşluk, ikonun kendi kutusu içinde ortalanmasından
+       doğal olarak geliyor (3.5rem kutu içinde 1.75rem ikon → iki yanda 0.875rem). */
+    gap: 0;
 
     height: 3.5rem;
-    padding-inline: 0.5rem;
+    padding: 0;
     border-radius: var(--radius-pill);
 
     background-color: var(--color-whatsapp);
@@ -82,8 +87,9 @@ const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(messag
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    /* Butonun yüksekliğiyle birebir aynı — kapalı hâlin daire olmasını sağlar */
+    width: 3.5rem;
+    height: 3.5rem;
     flex-shrink: 0;
   }
 
@@ -110,9 +116,10 @@ const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(messag
     opacity: 1;
   }
 
+  /* Açılınca metnin sağına nefes payı — soldaki boşluk ikon kutusundan geliyor */
   .whatsapp-fab:hover,
   .whatsapp-fab:focus-visible {
-    padding-inline: 0.5rem 1.25rem;
+    padding-inline: 0 1.5rem;
   }
 
   /* Hareket hassasiyeti: etiket her zaman açık, animasyon yok */
@@ -122,7 +129,7 @@ const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(messag
       opacity: 1;
     }
     .whatsapp-fab {
-      padding-inline: 0.5rem 1.25rem;
+      padding-inline: 0 1.5rem;
     }
   }
 </style>

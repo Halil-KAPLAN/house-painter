@@ -73,11 +73,11 @@
 | Bilgi | Değer | Kaynak |
 |---|---|---|
 | Ad | Bülent | kullanıcı |
-| Telefon | +90 537 525 21 20 | `notes.txt` |
-| Meslek | Boya ustası, alçı-saten uygulaması | `notes.txt` |
+| Telefon | +90 537 525 21 20 | ustanın anlatımı (`02-ICERIK.md` EK) |
+| Meslek | Boya ustası, alçı-saten uygulaması | ustanın anlatımı (`02-ICERIK.md` EK) |
 | Ana bölge | Darıca, Gebze, Çayırova | kullanıcı |
 | İkincil bölge | Tuzla, Pendik, Kartal (Marmaray hattı) | kullanıcı |
-| İş anlatımı | 9 adımlık süreç | `notes.txt` |
+| İş anlatımı | 9 adımlık süreç | ustanın anlatımı (`02-ICERIK.md` EK) |
 | Fotoğraflar | 11 adet | `assets/` |
 | Git deposu | `https://github.com/Halil-KAPLAN/house-painter.git` | kullanıcı |
 

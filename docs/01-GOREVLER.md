@@ -58,7 +58,7 @@ alan adı, soyadı ve adres bilgisi (`04-BEKLEYEN-BILGI.md`).
 - [x] `Hero.astro` — başlık, alt metin, tıkla-ara + WhatsApp CTA, LCP görseli
 - [x] `TrustStrip.astro` — güven şeridi (eşya koruma / tertemiz teslim / ücretsiz keşif)
 - [x] `ServicesGrid.astro` — 7 hizmet kartı
-- [x] `ProcessTimeline.astro` — `notes.txt`'ten 9 adımlık süreç
+- [x] `ProcessTimeline.astro` — ustanın anlatımından 9 adımlık süreç
 - [x] `WorkPreview.astro` — galeriden 6 görsel + "tümünü gör"
 - [x] `RegionsGrid.astro` — 6 ilçe + Marmaray hattı vurgusu
 - [x] `Faq.astro` — 6-8 soru (`FAQPage` şeması ile)

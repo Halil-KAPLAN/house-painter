@@ -32,8 +32,9 @@ değil, müşteri getiren bir araç: birisi Google'da "Darıca boyacı" aradığ
 ## Kaynak Malzeme
 
 - `assets/` — 11 adet iş fotoğrafı (WhatsApp, 1200×1600 / 1600×1200 JPEG). **Dokunulmaz.**
-- `notes.txt` — ustanın kendi ağzından iş anlatımı + telefon. 9 adımlık "Çalışma Sürecimiz"
-  bölümünün kaynağı.
+- ~~`notes.txt`~~ — kaldırıldı (2026-08-05). Ustanın kendi ağzından yazdığı ham metin
+  **birebir** `02-ICERIK.md` içindeki "EK — Ustanın Orijinal Anlatımı" bölümüne taşındı.
+  9 adımlık "Çalışma Sürecimiz" bölümünün kaynağıdır.
 
 ## Mimari Kararlar (Karar Günlüğü)
 
@@ -57,6 +58,14 @@ Format: `TARİH — KARAR — NEDEN`
 | 2026-08-05 | Yüzen WhatsApp butonu sadece `md` ve üzeri | Mobilde ekran altında zaten [Ara] [WhatsApp] barı var; ikisi birden gösterilirse üst üste biner. Böylece her ekranda kalıcı WhatsApp erişimi olur, tekrar olmaz. |
 | 2026-08-05 | İletişim **formu yok**, telefon/WhatsApp öne alındı | Statik sitede form sunucu/servis bağımlılığı demek. Ayrıca bu işte müşteri form doldurmuyor, doğrudan arıyor. |
 | 2026-08-05 | `tsconfig.json`'dan **`baseUrl` kaldırıldı**, import'lar alias'a geçirildi | `baseUrl` TypeScript 6.0'da kullanımdan kalktı, 7.0'da çalışmayı bırakacak. `paths` onsuz da çalışıyor (yollar tsconfig dizinine göre çözülür). Aynı anda 27 dosyadaki `../../` import'ları `@config/`, `@components/` gibi alias'lara çevrildi — hem tutarlılık hem okunabilirlik. ⚠️ `ignoreDeprecations` ile susturmak yanlış olurdu: sorunu ertelemiş olurduk. |
+| 2026-08-05 | Sayfa zemini beyazdan **kum/bej** tonuna çevrildi (`--color-sand-*`) | Boya-badana işine yakışan sıcak bir zemin; ekranda beyazdan yumuşak ve beyaz kartların öne çıkmasını sağlıyor. Kum tonları `@theme` içinde tek yerde; zemini değiştirmek için 4 değer yeterli. |
+| 2026-08-05 | Kum zemin geçişinde `text-ink-500` → `text-ink-600` | `ink-500` kum üzerinde 4.18:1 kalıyordu (WCAG AA 4.5 ister). Zemin değişince kontrast yeniden ölçüldü ve metin tonu bir kademe koyulaştırıldı. 6 sayfa tipinde Lighthouse Erişilebilirlik **100** korundu. |
+| 2026-08-05 | **Çalışma saatleri siteden tamamen kaldırıldı** | Gösterilen saat doğrulanmamış bir varsayımdı. Yanlış saat müşteriyi yanıltır ve schema.org'a uydurma veri yazar. `site.ts` → `openingHours` boş; bileşenler boşken hiç göstermiyor, şemaya da eklemiyor. Gerçek saat gelince iki alan doldurulunca geri gelir. |
+| 2026-08-05 | Galerideki tüm işler **"Tamamlandı"** rozetiyle gösteriliyor | Fotoğrafların bir kısmı hazırlık/uygulama anını gösterse de hepsi teslim edilmiş işler. Rozet karenin anını değil işin durumunu bildiriyor; çelişmesin diye ilgili açıklamalar geçmiş zamana çevrildi. |
+| 2026-08-05 | `notes.txt` kaldırıldı, ham metin `02-ICERIK.md`'ye taşındı | Kök dizin sadeleşti ama kaynak metin kaybolmadı — birebir kopyası "EK — Ustanın Orijinal Anlatımı" bölümünde. |
+| 2026-08-05 | Hero fotoğrafı: ustanın saten alçı çekerken göründüğü kare, **yatay aynalanmış** (`-scale-x-100`) | Orijinalde usta kadrajın solunda; metin bloğu da solda olduğu için tam altında kalıyordu. Aynalayınca sağa geçip scrim'in açıldığı tarafta net görünüyor. İnsan öğesi içeren tek fotoğrafımız — çalışan usta görüntüsü güven açısından bitmiş bir odadan güçlü. |
+| 2026-08-05 | Hero görselinde `layout="none"` kullanıldı | Astro'nun responsive stili `height: auto` dayatıp `size-full`i eziyordu; görsel kendi oranında uzayıp bölümden taşıyor ve ortası değil ÜST kısmı görünüyordu — `object-center` işe yaramıyordu. Bu prop stil enjeksiyonunu kapatır, srcset üretimini etkilemez. |
+| 2026-08-05 | `assets/` klasörü **KORUNDU** (silinmedi) | Fotoğrafların tek orijinal kopyası orada; `src/assets/isler/*.webp` bunlardan üretilmiş kayıplı türevler. Silinirse farklı kalite/kırpma/format bir daha üretilemez. Build çıktısına girmediği için yayınlanan siteyi büyütmüyor. Gerekçe `assets/README.md`'ye de yazıldı. |
 
 ## Yol Haritası
 
@@ -85,7 +94,7 @@ Detaylı görev listesi: **`01-GOREVLER.md`**
 | Lighthouse Erişilebilirlik | **100** |
 | Lighthouse En İyi Uygulamalar | **100** |
 | Lighthouse SEO | **100** |
-| LCP (4× CPU + Slow 4G) | **1.29 sn** |
+| LCP (4× CPU + Slow 4G) | **1.38 sn** |
 | CLS | **0.00** |
 | Client-side JavaScript | **0 KB** |
 | İç bağlantı / kırık | 953 / **0** |

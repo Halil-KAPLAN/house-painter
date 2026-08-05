@@ -1,7 +1,7 @@
 # 02 — Site İçeriği
 
 > Tüm site metinleri burada. Kod ile metin ayrı tutulur; bir yazı değişecekse önce burası
-> güncellenir, sonra ilgili bileşene taşınır. Metinler `notes.txt`'teki ustanın kendi
+> güncellenir, sonra ilgili bileşene taşınır. Metinler (en alttaki EK bölümündeki) ustanın kendi
 > anlatımından türetilmiştir — **uydurma iddia, uydurma istatistik, uydurma yorum yoktur.**
 
 ---
@@ -18,7 +18,8 @@
 
 ## Çalışma Sürecimiz (9 Adım)
 
-> `notes.txt`'in düzeltilmiş hâli. Ana sayfada timeline, hizmet sayfalarında referans.
+> Ustanın ham anlatımının (en alttaki EK bölümü) düzeltilmiş hâli.
+> Ana sayfada timeline, hizmet sayfalarında referans.
 > Bu bölüm aynı zamanda sitenin en değerli SEO içeriği: özgün, teknik, detaylı.
 
 **1. Hazırlık ve Koruma**
@@ -229,6 +230,32 @@ Pendik ve Kartal'a da geliyoruz. Emin değilseniz arayın, konuşalım.
   yapıldığı anlatılır: neden yoklama atlanmaz, neden astar şart, neden iki kat.
   Ustanın kendi anlatımından çıkan "temiz iş" felsefesi.
 - ⚠️ Tecrübe yılı bilgisi gelince eklenecek (`04-BEKLEYEN-BILGI.md`).
+
+---
+
+## EK — Ustanın Orijinal Anlatımı (kaynak metin)
+
+> Bu, Bülent Usta'nın WhatsApp'tan gönderdiği ham metnin **birebir kopyasıdır**
+> (imla düzeltilmemiştir). Kök dizindeki `notes.txt` kaldırıldı; kaynak metin
+> burada saklanıyor. Yukarıdaki "Çalışma Sürecimiz" bölümü bu anlatımdan türetildi.
+> İleride metin yeniden yazılacaksa referans burasıdır.
+
+```
+Bülent Boyacı: Darica boyaci olarak kaba sivanin uzerine kaba alçi ve karişi alçisi
+çektikte sonra yüzeyin düzgun olmasi için saten alçisi çekip alçilama işini
+bitiryoruz kuruduktan sora ziparasini tertemiz yapip tozun aldiktan sora diyo
+binder astarin kulaniyoruz daha sora iki kat boya yapiyoruz işi ter temiz teslim
+ediyoruz dolu dayrelerde boyama işlemlerini yaparken eşyalari ortaya aliyoruz mavi
+laylola kapatiyoruz supurgelere kağit bant çekiyoruz parkeleri mavi laylola
+kapatiyoruz boya olmasin diya duvarlarda yoklamlik işleri yapiyoruz sora yoklama
+yerlerine zipara atiyoruz tavanlar iki kat boya uygulamasi yapiyorum sora duvara
+iki kat boya vurup boyama işini bitiriyoruz laylolari kaldiriyoruz tertemiz supurup
+teslim ediyoruz boyama işlemi
+
+Bülent Boyacı: Boylece boyama işlemini bitirmiş oluyoruz
+
+Telefon No: +90 537 525 21 20
+```
 
 ---
 

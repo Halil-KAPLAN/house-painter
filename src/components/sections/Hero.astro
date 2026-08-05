@@ -6,20 +6,40 @@
 import { Image } from 'astro:assets';
 import { CONTACT, phoneHref, whatsappHref } from '@config/site';
 import Icon from '../Icon.astro';
-import heroImage from '@assets/isler/dolu-daire-salon-boyama.webp';
+/**
+ * Hero fotoğrafı. Değiştirirken alt metnini de güncelleyin — Google Görseller
+ * için sinyaldir.
+ *
+ * Not: Dikey bir fotoğraf da kullanılabilir; aşağıdaki `layout="none"` sayesinde
+ * object-cover + object-center doğru çalışıyor ve kadrajın ORTASI görünüyor.
+ *
+ * Yatay alternatifler (1600×1200): mutfak-boyama-tamamlandi ·
+ * mutfak-boyama-esya-koruma · asma-tavan-kartonpiyer-boyama · dukkan-boyama-hazirlik
+ */
+import heroImage from '@assets/isler/saten-alci-uygulamasi.webp';
 ---
 
 <section class="relative isolate overflow-hidden bg-ink-900">
   {/* Arka plan fotoğrafı — LCP elemanı */}
   <Image
     src={heroImage}
-    alt="Darıca'da eşyalı dairede tamamlanmış salon boyası"
+    alt="Bülent Usta duvara mala ile saten alçı uygularken — Darıca'da boya öncesi yüzey hazırlığı"
     widths={[640, 1024, 1600]}
     sizes="100vw"
+    layout="none"
     loading="eager"
     fetchpriority="high"
-    class="absolute inset-0 -z-10 size-full object-cover object-center"
+    class="absolute inset-0 -z-10 size-full -scale-x-100 object-cover object-center"
   />
+  {/* -scale-x-100 = fotoğraf yatay aynalanır.
+      Orijinalde çalışan usta kadrajın SOLUNDA; metin bloğu da solda olduğu için
+      tam altında kalıyordu. Aynalayınca usta sağa geçiyor ve scrim'in açıldığı
+      tarafta net görünüyor. Fotoğrafın içeriği değişmiyor, sadece yönü. */}
+  {/* layout="none" şart: Astro'nun responsive stili `height: auto` dayatıp
+      `size-full`i eziyordu. O zaman görsel kendi oranında uzuyor, bölümden taşıyor
+      ve ortası değil ÜST kısmı görünüyordu — object-center işe yaramıyordu.
+      Bu prop ile stil enjekte edilmez; object-cover + object-center düzgün çalışır.
+      srcset üretimi etkilenmez, widths/sizes aynen geçerli. */}
   <div class="scrim absolute inset-0 -z-10"></div>
 
   <div class="container-content">
@@ -71,7 +91,7 @@ import heroImage from '@assets/isler/dolu-daire-salon-boyama.webp';
         </span>
         <span class="inline-flex items-center gap-1.5">
           <Icon name="check" class="size-4 text-accent-400" />
-          {CONTACT.openingHoursDisplay}
+          Eşyalarınız korunur
         </span>
       </p>
     </div>

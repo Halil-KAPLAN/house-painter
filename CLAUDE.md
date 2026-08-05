@@ -26,8 +26,9 @@ Kartal (Marmaray hattı, Anadolu yakası).
 
 | # | Kural |
 |---|---|
-| 1 | **`assets/` klasörüne dokunma.** Orijinal fotoğrafların kaynağıdır. Silme, yeniden adlandırma, üzerine yazma yok. Optimize kopyalar `src/assets/isler/` içinde üretilir. |
+| 1 | **`assets/` klasörünü SİLME.** Fotoğrafların tek orijinal kopyasıdır; `src/assets/isler/*.webp` bunlardan üretilmiş kayıplı türevlerdir. Build çıktısına girmez, siteyi büyütmez. Detay: `assets/README.md`. |
 | 2 | **Renk, font, boşluk, gölge değerini bileşene hard-code etme.** Hepsi `src/styles/_base.css` içindeki `@theme` token'larından gelir. `bg-[#1e40af]` gibi keyfi değer yasak; `bg-brand-700` kullan. |
+| 2b | **Sayfa zemini kum/bej** (`--color-sand-*`), beyaz değil. Bölüm zemini `bg-sand-100`, kenarlık `border-sand-200`, kartlar beyaz kalır (kum üzerinde öne çıksınlar). Zemini değiştirmek için `@theme`'deki 4 sand değeri yeterli — sonra kontrastı yeniden ölçün. |
 | 3 | **İsim / telefon / adres / domain'i sayfaya elle yazma.** Tek kaynak `src/config/site.ts`. |
 | 4 | **Site metinlerini `docs/02-ICERIK.md` ile senkron tut.** Metin oradan gelir, kod ile karışmaz. |
 | 5 | **Sahte içerik üretme.** Uydurma müşteri yorumu, uydurma yıldız puanı (`aggregateRating`), uydurma "1500+ mutlu müşteri" istatistiği **yasak** — Google spam politikası ihlali ve ziyaretçiyi yanıltır. Gerçek veri gelene kadar o bölüm eklenmez. |
@@ -36,7 +37,7 @@ Kartal (Marmaray hattı, Anadolu yakası).
 | 8 | Her görselde açıklayıcı Türkçe `alt` + `width`/`height` (CLS önlemi). |
 | 9 | **Mobile-first.** Önce 375px'te doğru görünsün, sonra `sm:`/`md:`/`lg:` ile büyüt. Dokunma hedefleri ≥ 44px. |
 | 10 | **JavaScript eklemeyin.** Site şu an **0 KB client-side JS** ile çalışıyor. Menü `<details>`, SSS `<details>`, galeri filtresi `radio + :has()`, lightbox `:target` ile — hepsi JS'siz. Yeni bir etkileşim gerekirse önce CSS ile çözmeyi deneyin. |
-| 11 | **Renk değiştirirken kontrastı ölçün.** CTA turuncusu ve WhatsApp yeşili WCAG AA (4.5:1) için bilerek koyulaştırıldı. Açarsanız buton yazıları güneş altında okunmaz. |
+| 11 | **Renk değiştirirken kontrastı ölçün — Lighthouse skoru düşmemeli.** CTA turuncusu ve WhatsApp yeşili WCAG AA (4.5:1) için bilerek koyulaştırıldı. Kum zemin üzerinde gövde metni **en az `ink-600`** olmalı (`ink-500` 4.18:1 ile kalıyor). Değişiklikten sonra Lighthouse'u 6 sayfa tipinde çalıştırın. |
 | 12 | Yüzen WhatsApp butonu (`WhatsappFab.astro`) sadece `md` ve üzeri gösterilir — mobilde `MobileCallBar` zaten aynı işi yapar. İkisini birden açmayın, üst üste biner. |
 | 13 | Yeni sayfa eklerken `BaseLayout`'a **benzersiz** `title` ve `description` verin; `npm run seo` kopyaları yakalar. |
 | 14 | Import'larda **alias kullanın**, göreli yol değil: `@config/`, `@components/`, `@layouts/`, `@data/`, `@assets/`, `@styles/`. (Aynı klasördeki dosya için `./X.astro` normaldir.) `tsconfig.json`'a **`baseUrl` eklemeyin** — TypeScript 6.0'da kullanımdan kalktı, `paths` onsuz çalışıyor. |

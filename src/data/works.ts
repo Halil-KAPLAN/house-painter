@@ -43,7 +43,12 @@ export type Work = {
   /** Görsel alt metni — açıklayıcı ve konum bilgisi içerir */
   alt: string;
   category: CategorySlug;
-  /** İşin hangi aşamasını gösterdiği */
+  /**
+   * Rozette görünen durum. Galerideki işlerin hepsi teslim edilmiş işler olduğu
+   * için tamamı `tamamlandi`. Bazı kareler hazırlık veya uygulama anını gösterse
+   * de rozet KARENİN anını değil, İŞİN durumunu bildirir.
+   * İleride devam eden bir iş eklenirse diğer değerler kullanılabilir.
+   */
   stage: 'hazirlik' | 'uygulama' | 'tamamlandi';
 };
 
@@ -93,20 +98,20 @@ export const WORKS: Work[] = [
     image: mutfakEsyaKoruma,
     title: 'Mutfakta eşya koruması',
     caption:
-      'Tezgâh, dolaplar ve beyaz eşya naylonla kapatıldıktan sonra boyaya başlanıyor.',
+      'Tezgâh, dolaplar ve beyaz eşya naylonla kapatıldı; boya bu koruma altında yapılıp mutfak tertemiz teslim edildi.',
     alt: 'Boyama öncesi mutfakta tezgâh ve dolapların naylonla örtülerek korunması',
     category: 'konut',
-    stage: 'hazirlik',
+    stage: 'tamamlandi',
   },
   {
     id: 'mutfak-duvar-yuzey',
     image: mutfakDuvarYuzey,
     title: 'Boya öncesi yüzey durumu',
     caption:
-      'Mutfak duvarında eski boyanın kabardığı bölge. Bu tür yüzeyler kazınıp yoklama yapılmadan boyanmaz.',
+      'Mutfak duvarında eski boyanın kabardığı bölge. Kazınıp yoklama yapıldıktan sonra astarlanıp iki kat boyandı.',
     alt: 'Mutfak duvarında boya öncesi tespit edilen kabarma ve yüzey bozukluğu',
     category: 'alci-saten',
-    stage: 'hazirlik',
+    stage: 'tamamlandi',
   },
   {
     id: 'saten-alci-uygulamasi',
@@ -116,7 +121,7 @@ export const WORKS: Work[] = [
       'İş yerinde mala ile saten alçı çekimi. Yüzeyin pürüzsüz olması bu katmana bağlı.',
     alt: 'Usta mala ile duvara saten alçı çekerken, iş yeri boyama hazırlığı',
     category: 'alci-saten',
-    stage: 'uygulama',
+    stage: 'tamamlandi',
   },
   {
     id: 'asma-tavan-kartonpiyer',
@@ -133,20 +138,20 @@ export const WORKS: Work[] = [
     image: dukkanBoyamaHazirlik,
     title: 'Dükkân boyamasında hazırlık',
     caption:
-      'Vitrin önü ve zemin kapatıldı, malzemeler yerleştirildi. İş yerlerinde koruma evden daha kapsamlı olur.',
+      'Vitrin önü ve zemin kapatılarak başlanan dükkân boyaması. İş yerlerinde koruma evden daha kapsamlı olur.',
     alt: 'Dükkân boyaması öncesi zemin koruması, merdiven ve boya malzemeleri',
     category: 'isyeri',
-    stage: 'hazirlik',
+    stage: 'tamamlandi',
   },
   {
     id: 'isyeri-zemin-koruma',
     image: isyeriZeminKoruma,
     title: 'İş yerinde zemin koruması',
     caption:
-      'Geniş hacimli iş yerinde tüm zemin örtüldükten sonra alçı ve boya aşamasına geçildi.',
+      'Geniş hacimli iş yerinde tüm zemin örtüldü; alçı ve boya bu koruma altında tamamlandı.',
     alt: 'İş yeri boyamasında tamamen örtülmüş zemin, alçı ve boya öncesi hazırlık',
     category: 'isyeri',
-    stage: 'hazirlik',
+    stage: 'tamamlandi',
   },
   {
     id: 'cocuk-odasi-dekoratif',

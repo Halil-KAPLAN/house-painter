@@ -114,7 +114,7 @@ const areaSchema = {
                   <Icon name={service.icon as IconName} class="size-6" />
                 </span>
                 <h3 class="mt-3.5 text-base font-bold text-ink-900">{service.title}</h3>
-                <p class="mt-1.5 flex-1 text-sm leading-relaxed text-ink-500">
+                <p class="mt-1.5 flex-1 text-sm leading-relaxed text-ink-600">
                   {service.summary}
                 </p>
                 <span
@@ -140,7 +140,7 @@ const areaSchema = {
           </p>
           <ul class="mt-5 flex flex-wrap gap-2">
             {region.neighbourhoods.map((n) => (
-              <li class="badge border-ink-200 bg-ink-50 text-ink-600">
+              <li class="badge border-sand-200 bg-sand-100 text-ink-600">
                 <Icon name="map-pin" class="size-3.5 text-brand-500" />
                 {n}
               </li>
@@ -167,11 +167,6 @@ const areaSchema = {
               <Icon name="phone" class="size-4.5" />
               {CONTACT.phoneDisplay}
             </a>
-            {/* brand-50 zemin üzerinde ink-500 4.37:1 kalıyor → ink-600 */}
-            <p class="mt-3.5 flex items-center gap-2 text-xs text-ink-600">
-              <Icon name="clock" class="size-4 shrink-0 text-brand-600" />
-              {CONTACT.openingHoursDisplay}
-            </p>
           </div>
 
           <div class="card">
@@ -181,7 +176,7 @@ const areaSchema = {
                 <li>
                   <a
                     href={`/hizmetler/${s.slug}`}
-                    class="flex items-center justify-between gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-50 hover:text-brand-700"
+                    class="flex items-center justify-between gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-ink-600 transition-colors hover:bg-sand-100 hover:text-brand-700"
                   >
                     {s.title}
                     <Icon name="arrow-right" class="size-4 shrink-0 text-ink-300" />

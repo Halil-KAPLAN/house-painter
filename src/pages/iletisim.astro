@@ -85,7 +85,7 @@ const contactSchema = {
           >
             <Icon name="map-pin" class="size-6" />
           </span>
-          <h2 class="mt-4 text-lg font-bold text-ink-900">Çalışma bölgesi ve saatler</h2>
+          <h2 class="mt-4 text-lg font-bold text-ink-900">Çalışma bölgemiz</h2>
 
           <dl class="mt-4 space-y-3.5 text-sm">
             <div>
@@ -95,8 +95,10 @@ const contactSchema = {
               </dd>
             </div>
             <div>
-              <dt class="font-semibold text-ink-900">Çalışma saatleri</dt>
-              <dd class="text-ink-600">{CONTACT.openingHoursDisplay}</dd>
+              <dt class="font-semibold text-ink-900">Gittiğimiz ilçeler</dt>
+              <dd class="text-ink-600">
+                {REGIONS.map((r) => r.name).join(' · ')}
+              </dd>
             </div>
             <div>
               <dt class="font-semibold text-ink-900">Keşif</dt>

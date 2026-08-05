@@ -54,11 +54,20 @@ export const CONTACT = {
   /** TODO(04-BEKLEYEN-BILGI): tam adres gelince koordinat ekle */
   geo: null as { lat: number; lng: number } | null,
 
-  /** TODO(04-BEKLEYEN-BILGI): kesin çalışma saatleri gelince güncelle */
-  openingHours: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '08:00', closes: '19:00' },
-  ],
-  openingHoursDisplay: 'Pazartesi – Cumartesi, 08:00 – 19:00',
+  /**
+   * Çalışma saatleri — şu an BİLEREK boş.
+   *
+   * Önceki değer varsayımdı; doğrulanmamış saat göstermek müşteriyi yanıltır ve
+   * schema.org'a uydurma veri yazar. Boş olduğu sürece saat bilgisi sitenin
+   * HİÇBİR yerinde görünmez ve yapısal veriye eklenmez — bileşenler bunu kontrol eder.
+   *
+   * Gerçek saatler gelince aşağıdaki iki alanı doldurmak yeterli; tüm siteye yansır.
+   * Örnek:
+   *   openingHours: [{ days: ['Monday', ... , 'Saturday'], opens: '08:00', closes: '19:00' }],
+   *   openingHoursDisplay: 'Pazartesi – Cumartesi, 08:00 – 19:00',
+   */
+  openingHours: [] as { days: string[]; opens: string; closes: string }[],
+  openingHoursDisplay: '',
 
   /** TODO(04-BEKLEYEN-BILGI): e-posta gelince doldur */
   email: '',
@@ -570,7 +579,8 @@ export const PRIMARY_REGIONS = REGIONS.filter((r) => r.tier === 'primary');
 export const AREA_SERVED = REGIONS.map((r) => r.name);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Çalışma süreci — notes.txt'teki ustanın anlatımından
+// Çalışma süreci — ustanın kendi anlatımından türetildi.
+// Ham kaynak metin: docs/02-ICERIK.md → "EK — Ustanın Orijinal Anlatımı"
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const PROCESS_STEPS = [
