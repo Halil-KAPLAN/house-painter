@@ -1,0 +1,60 @@
+# Netlify yapılandırması
+#
+# Site statik olduğu için adaptöre gerek yok — `dist/` klasörü olduğu gibi yayınlanır.
+# Netlify kök adreste sunduğu için (örn. bulent-usta.netlify.app) bağlantılarda
+# alt klasör düzeltmesi gerekmiyor; kaynak kod olduğu gibi çalışıyor.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ⚠️  YAYIN ÖNCESİ SİLİNECEK BÖLÜM
+#
+# Kendi alan adı bağlanana kadar site *.netlify.app adresinde duruyor ve bu bir
+# TEST kopyası. Google bu kopyayı indekslerse, gerçek site yayına girdiğinde
+# kendi sitemizle "yinelenen içerik" olarak rekabet eder ve sıralamayı düşürür.
+#
+# Alan adını bağladıktan sonra AŞAĞIDAKİ BLOĞU TAMAMEN SİLİN,
+# sonra Search Console'dan siteyi yeniden taratın.
+# ─────────────────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+# ───────────────────────── SİLİNECEK BÖLÜM BİTTİ ─────────────────────────────
+
+# Güvenlik başlıkları
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Astro'nun ürettiği varlıkların adında içerik özeti (hash) var — içerik değişirse
+# dosya adı da değişir. Bu yüzden süresiz önbelleğe alınabilirler.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# public/ içindeki sabit dosyalar — bir gün önbellek, günde bir doğrulama
+[[headers]]
+  for = "/og-image.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/apple-touch-icon.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

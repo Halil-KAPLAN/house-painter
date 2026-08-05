@@ -212,28 +212,29 @@ the part that is actually under our control — and does it thoroughly.
 
 ## Deployment
 
-The build output in `dist/` is fully static and works on any static host.
-Cloudflare Pages or Netlify are both a good fit (free tier, CDN close to Turkey):
+The build output in `dist/` is fully static — no server or adapter required.
 
-```
-Build command:      npm run build
-Output directory:   dist
-Node version:       20 or higher
-```
+**Currently deployed on Netlify:** https://bulent-usta.netlify.app
 
-### Temporary preview on GitHub Pages
+`netlify.toml` holds the whole configuration:
 
-A preview build is deployed to GitHub Pages for review purposes:
-**https://halil-kaplan.github.io/house-painter/**
+| Setting | Value |
+|---|---|
+| Build command | `npm run build` |
+| Publish directory | `dist` |
+| Node version | 22 |
 
-The source code assumes the site lives at the **root** of its own domain, which is
-where it will end up. A GitHub Pages *project* site lives under a subdirectory, so
-`scripts/ghpages-patch.mjs` rewrites root-relative URLs in `dist/` immediately before
-deployment. Nothing in `src/` is touched — the codebase stays correct for the real domain.
+It also sets long-lived immutable caching for Astro's content-hashed assets in
+`/_astro/*`, plus a few standard security headers.
 
-The same script also sets `noindex` on every page and writes a disallow-all `robots.txt`.
-This matters: an indexed preview copy would compete with the real site as duplicate
-content once it launches.
+### One thing to remove before launch
 
-`.github/workflows/deploy-ghpages.yml` runs this on every push to `main`.
-Delete the workflow and the script once the site moves to its own domain.
+While the site lives on `*.netlify.app` it is a **preview**, and `netlify.toml`
+sends `X-Robots-Tag: noindex, nofollow` for every page.
+
+This is deliberate. If Google indexes the preview, it becomes duplicate content
+competing with the real site the moment the custom domain goes live.
+
+Once the domain is attached, delete the clearly marked block in `netlify.toml`
+and re-request indexing in Search Console. It is the first item in the launch
+checklist in `docs/03-SEO.md`.

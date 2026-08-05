@@ -140,6 +140,24 @@ Her bölge sayfasında zorunlu olarak farklı olacaklar:
 
 > Bunlar kodla yapılamaz ama sıralama için koddan daha önemlidir.
 
+0. ⚠️ **ÖNCE BUNU YAPIN — `netlify.toml`'daki `noindex` bloğunu silin.**
+
+   Site şu an `bulent-usta.netlify.app` adresinde bir **ön izleme** olarak duruyor
+   ve `netlify.toml` her sayfaya `X-Robots-Tag: noindex, nofollow` gönderiyor.
+   Bu bilerek yapıldı: Google ön izlemeyi indekslerse, gerçek site yayına girdiğinde
+   kendi sitemizle yinelenen içerik olarak rekabet eder.
+
+   Kendi alan adı bağlandıktan sonra:
+   - `netlify.toml` içindeki "YAYIN ÖNCESİ SİLİNECEK BÖLÜM" bloğunu tamamen silin
+   - `src/config/site.ts` → `SITE.url` ve `astro.config.mjs` → `site` alanlarını
+     gerçek alan adıyla güncelleyin
+   - `public/robots.txt` içindeki sitemap adresini güncelleyin
+   - Netlify'da alan adını **birincil (primary)** yapın; böylece `.netlify.app`
+     adresi otomatik olarak alan adına yönlenir ve iki adres birden indekslenmez
+   - Yeniden derleyip yayınlayın, ardından Search Console'dan taratın
+
+   **Bu adım atlanırsa yapılan tüm SEO çalışması boşa gidebilir.**
+
 1. **Google Business Profile açın** — google.com/business
    - Kategori: "Boyacı" (birincil), "Ev tadilat hizmeti" (ikincil)
    - Hizmet bölgesi işletmesi olarak kaydolun (adres göstermek zorunda değilsiniz)

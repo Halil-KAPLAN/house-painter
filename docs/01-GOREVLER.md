@@ -141,8 +141,12 @@ alan adı, soyadı ve adres bilgisi (`04-BEKLEYEN-BILGI.md`).
 
 > Detay: `03-SEO.md`
 
-- [ ] Alan adı alındı ve `site.ts` güncellendi
-- [ ] Cloudflare Pages / Netlify'a deploy
+- [x] **Netlify'a deploy edildi** → https://bulent-usta.netlify.app (ön izleme) · 2026-08-05
+- [ ] ⚠️ **`netlify.toml`'daki `noindex` bloğu silindi** ← alan adı bağlanınca İLK bu
+      (atlanırsa ön izleme kopyası gerçek siteyle yinelenen içerik olarak rekabet eder)
+- [ ] Alan adı alındı; `site.ts` → `SITE.url`, `astro.config.mjs` → `site` ve
+      `public/robots.txt` → sitemap adresi güncellendi
+- [ ] Netlify'da alan adı **birincil** yapıldı (`.netlify.app` ona yönlensin)
 - [ ] **Google Business Profile açıldı** ← yerel aramada en etkili adım
 - [ ] Google Search Console doğrulaması + sitemap gönderimi
 - [ ] Bing Webmaster Tools
