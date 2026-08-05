@@ -1,0 +1,68 @@
+# GEÇİCİ TEST YAYINI — GitHub Pages
+#
+# Adres: https://halil-kaplan.github.io/house-painter/
+#
+# Bu iş akışı sadece ön izleme içindir. Site asıl olarak kendi alan adında
+# (örn. bulentusta.com) yayınlanacak; o zaman bu dosya silinebilir.
+#
+# `scripts/ghpages-patch.mjs` yalnızca burada çalışır ve `dist/` çıktısını
+# alt klasöre uyarlar. Kaynak kod (`src/`) hiç değişmez.
+#
+# İLK KURULUM: GitHub'da Settings → Pages → Source = "GitHub Actions" seçilmeli.
+
+name: Test yayını (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+  # Actions sekmesinden elle de tetiklenebilir
+  workflow_dispatch:
+
+# Pages'e dağıtım için gereken izinler
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Aynı anda tek dağıtım; devam edeni iptal etme
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bağımlılıkları yükle
+        run: npm ci
+
+      - name: Tip denetimi
+        run: npm run check
+
+      - name: Derle ve GitHub Pages için uyarla
+        run: npm run build:ghpages
+
+      - name: Pages artefaktını yükle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: GitHub Pages'e dağıt
+        id: deployment
+        uses: actions/deploy-pages@v4

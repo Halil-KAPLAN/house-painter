@@ -220,3 +220,20 @@ Build command:      npm run build
 Output directory:   dist
 Node version:       20 or higher
 ```
+
+### Temporary preview on GitHub Pages
+
+A preview build is deployed to GitHub Pages for review purposes:
+**https://halil-kaplan.github.io/house-painter/**
+
+The source code assumes the site lives at the **root** of its own domain, which is
+where it will end up. A GitHub Pages *project* site lives under a subdirectory, so
+`scripts/ghpages-patch.mjs` rewrites root-relative URLs in `dist/` immediately before
+deployment. Nothing in `src/` is touched — the codebase stays correct for the real domain.
+
+The same script also sets `noindex` on every page and writes a disallow-all `robots.txt`.
+This matters: an indexed preview copy would compete with the real site as duplicate
+content once it launches.
+
+`.github/workflows/deploy-ghpages.yml` runs this on every push to `main`.
+Delete the workflow and the script once the site moves to its own domain.
