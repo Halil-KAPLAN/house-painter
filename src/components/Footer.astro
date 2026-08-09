@@ -46,10 +46,19 @@ const year = new Date().getFullYear();
             <Icon name="whatsapp" class="size-4 text-whatsapp" />
             WhatsApp'tan yazın
           </a>
-          <span class="inline-flex items-center gap-2 text-ink-600">
-            <Icon name="map-pin" class="size-4 text-brand-600" />
-            {CONTACT.address.district}, {CONTACT.address.city}
-          </span>
+          {/* NAP tutarlılığı: adres Google Business Profile'daki ile birebir aynı */}
+          <a
+            href={CONTACT.maps.short}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-start gap-2 text-ink-600 hover:text-brand-700"
+          >
+            <Icon name="map-pin" class="mt-0.5 size-4 shrink-0 text-brand-600" />
+            <span>
+              {CONTACT.address.street},<br />
+              {CONTACT.address.postalCode} {CONTACT.address.district} / {CONTACT.address.city}
+            </span>
+          </a>
         </div>
       </div>
 

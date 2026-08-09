@@ -13,13 +13,18 @@
 - **Nereye yansır:** Site adı, logo, `<title>` sonekleri, schema `name`, footer, OG etiketleri
 - **Güncellenecek yer:** `src/config/site.ts` → `owner.fullName`, `brand.name`
 
-### 2. Adres
-- **Şu anki durum:** Boş — schema'da `address`/`geo` alanları henüz eklenmedi
-- **Nereye yansır:** `HousePainter` schema `address` + `geo`, iletişim sayfası, footer,
-  Google Business Profile eşleşmesi
-- **Güncellenecek yer:** `src/config/site.ts` → `address`, `geo`
-- **Not:** Hizmet bölgesi işletmesi olarak açık adres göstermek zorunlu değil; sadece
-  ilçe/il de yeterli olabilir. Ustaya sorulmalı.
+### 2. ✅ Adres — GELDİ (2026-08-09)
+- **Değer:** Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 8 Daire 2, 41700 Darıca / Kocaeli
+- **Koordinat:** 40.7882631, 29.387068
+- **Nereye yansıdı:** `HousePainter` schema `address` + `geo` + `hasMap`,
+  iletişim sayfası (gömülü harita + yol tarifi), footer
+- **Kaynak:** `src/config/site.ts` → `CONTACT.address`, `CONTACT.geo`, `CONTACT.maps`
+- ⚠️ **Kontrol edilmeli:** Verilen harita bağlantısındaki iğne **1665. Sk. No: 11**
+  adresinde; yazılı adres ise **No: 8**. Aynı sokak olduğu için harita doğru yeri
+  gösteriyor ama iğne birkaç bina ötede. Google Business Profile açılırken konum
+  No: 8'e taşınmalı, sonra `CONTACT.geo` ve `CONTACT.maps` buna göre güncellenmeli.
+- ⚠️ **NAP kuralı:** Bu adres Google Business Profile ve tüm rehberlerde **harfi
+  harfine aynı** yazılmalı; farklı yazım yerel sıralamayı düşürür.
 
 ### 3. Alan adı (domain)
 - **Şu anki placeholder:** `https://bulentboyaci.com` (varsayım)

@@ -9,7 +9,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHeader from '@components/PageHeader.astro';
 import Icon from '@components/Icon.astro';
-import { CONTACT, REGIONS, SERVICES, phoneHref, whatsappHref } from '@config/site';
+import { SITE, CONTACT, REGIONS, SERVICES, phoneHref, whatsappHref } from '@config/site';
 
 const crumbs = [{ label: 'İletişim', href: '/iletisim' }];
 
@@ -89,9 +89,12 @@ const contactSchema = {
 
           <dl class="mt-4 space-y-3.5 text-sm">
             <div>
-              <dt class="font-semibold text-ink-900">Merkez</dt>
+              <dt class="font-semibold text-ink-900">Adres</dt>
+              {/* NAP tutarlılığı: bu adres Google Business Profile'daki ile
+                  birebir aynı olmalı — site.ts tek kaynak */}
               <dd class="text-ink-600">
-                {CONTACT.address.district}, {CONTACT.address.city}
+                {CONTACT.address.street}<br />
+                {CONTACT.address.postalCode} {CONTACT.address.district} / {CONTACT.address.city}
               </dd>
             </div>
             <div>
@@ -105,8 +108,67 @@ const contactSchema = {
               <dd class="text-ink-600">Ücretsiz, yerinde</dd>
             </div>
           </dl>
+
+          <a
+            href={CONTACT.maps.short}
+            target="_blank"
+            rel="noopener"
+            class="btn btn-outline mt-5 w-full bg-white"
+          >
+            <Icon name="map-pin" class="size-4.5" />
+            Yol tarifi al
+          </a>
         </div>
       </div>
+
+      {/* Harita */}
+      <section class="mt-12" aria-labelledby="harita-baslik">
+        <h2 id="harita-baslik" class="text-lg font-bold text-ink-900">Bizi haritada bulun</h2>
+        <p class="mt-1.5 text-sm text-ink-600">
+          {CONTACT.address.street}, {CONTACT.address.district} / {CONTACT.address.city}
+        </p>
+
+        {/*
+          TIKLAYINCA YÜKLENEN HARİTA — JavaScript yok, <details> ile.
+
+          Neden doğrudan gömmüyoruz?
+          Google'ın gömülü haritası sayfa açılır açılmaz ziyaretçiye izleme çerezi
+          bırakıyor (NID, __Secure-3PSID…). Bu hem Lighthouse "En İyi Uygulamalar"
+          skorunu 100'den 77'ye düşürüyor hem de KVKK açısından çerez onayı
+          gerektiren bir durum yaratıyor.
+
+          Kapalı <details> içindeki iframe `display:none` olduğu için `loading="lazy"`
+          ile yüklenmiyor; kullanıcı açana kadar Google'a HİÇBİR istek gitmiyor.
+          Böylece harita isteyen görüyor, istemeyen izlenmiyor.
+        */}
+        <details class="harita mt-5 overflow-hidden rounded-card border border-sand-200 bg-white shadow-card">
+          <summary
+            class="flex cursor-pointer list-none flex-col items-center gap-3 px-6 py-12 text-center transition-colors hover:bg-sand-100 [&::-webkit-details-marker]:hidden"
+          >
+            <span
+              class="flex size-12 items-center justify-center rounded-xl bg-brand-100 text-brand-700"
+            >
+              <Icon name="map-pin" class="size-6" />
+            </span>
+            <span class="text-base font-bold text-ink-900">Haritayı göster</span>
+            <span class="max-w-md text-sm leading-relaxed text-ink-600">
+              Harita Google'dan yüklenir ve Google tarafından çerez bırakılır.
+              Bu yüzden yalnızca siz isteyince açılıyor.
+            </span>
+          </summary>
+
+          <iframe
+            src={CONTACT.maps.embed}
+            title={`${SITE.name} — ${CONTACT.address.district} konumu haritada`}
+            width="100%"
+            height="420"
+            style="border:0; display:block;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </details>
+      </section>
 
       {/* Aramadan önce hazırlayın */}
       <div class="mt-10 rounded-card border border-brand-100 bg-brand-50 p-6 sm:p-8">

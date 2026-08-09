@@ -42,17 +42,33 @@ export const CONTACT = {
   whatsapp: '905375252120',
   whatsappMessage: 'Merhaba, boya işi için fiyat almak istiyorum.',
 
-  /** TODO(04-BEKLEYEN-BILGI): adres gelince doldur; boşken schema'ya eklenmez */
+  /**
+   * Açık adres.
+   * ⚠️ Bu bilgi Google Business Profile kaydıyla HARFİ HARFİNE aynı yazılmalı.
+   * Farklı yazımlar (NAP tutarsızlığı) yerel arama sıralamasını düşürür.
+   */
   address: {
-    street: '',
+    street: 'Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 8 Daire 2',
     district: 'Darıca',
     city: 'Kocaeli',
-    postalCode: '',
+    postalCode: '41700',
     country: 'TR',
   },
 
-  /** TODO(04-BEKLEYEN-BILGI): tam adres gelince koordinat ekle */
-  geo: null as { lat: number; lng: number } | null,
+  /** Konum — schema.org `geo` alanı ve harita için */
+  geo: { lat: 40.7882631, lng: 29.387068 } as { lat: number; lng: number } | null,
+
+  /** Google Haritalar bağlantıları */
+  maps: {
+    /** Paylaşım için kısa link (yol tarifi butonu) */
+    short: 'https://maps.app.goo.gl/eAxkwgwsvD49zaCM8',
+    /**
+     * Gömülü harita. API anahtarı gerektirmeyen `output=embed` biçimi kullanılıyor;
+     * koordinat `geo` ile aynı noktayı gösterir.
+     */
+    embed:
+      'https://www.google.com/maps?q=40.7882631,29.387068&z=17&hl=tr&output=embed',
+  },
 
   /**
    * Çalışma saatleri — şu an BİLEREK boş.

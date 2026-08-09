@@ -21,8 +21,8 @@ const { schemas = [] } = Astro.props;
 
 const businessId = `${SITE.url}/#boyaci`;
 
-// Adres — henüz sokak bilgisi yok, sadece ilçe/il veriliyor.
-// Bilgi gelince site.ts güncellenir, buraya otomatik yansır.
+// Adres. Eksik alanlar (sokak, posta kodu) varsa şemaya hiç eklenmez —
+// boş string göndermek Google'a "bilgi yok" değil "bilgi boş" der.
 const address: Record<string, string> = {
   '@type': 'PostalAddress',
   addressLocality: CONTACT.address.district,
@@ -45,6 +45,8 @@ const business: Record<string, unknown> = {
   currenciesAccepted: 'TRY',
   paymentAccepted: 'Nakit, Havale/EFT',
   address,
+  // Google Haritalar kaydına bağlar — konumu doğrulamaya yardım eder
+  hasMap: CONTACT.maps.short,
   areaServed: AREA_SERVED.map((name) => ({ '@type': 'City', name })),
   knowsLanguage: 'tr',
   hasOfferCatalog: {

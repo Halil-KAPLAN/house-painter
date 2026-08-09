@@ -475,12 +475,16 @@
 }
 
 /* Hero üzerindeki fotoğrafın üstüne binen okunabilirlik katmanı */
+/* Hero fotoğrafının üstündeki okunabilirlik katmanı.
+   ⚠️ Değerleri düşürmek fotoğrafı açar ama beyaz metnin kontrastını da düşürür.
+   Değiştirdikten sonra Lighthouse'u ana sayfada çalıştırın — metin kontrastı
+   WCAG AA (4.5:1) altına inerse Erişilebilirlik skoru düşer. */
 .scrim {
   background: linear-gradient(
     to right,
-    oklch(0.208 0.042 266 / 0.92) 0%,
-    oklch(0.208 0.042 266 / 0.78) 45%,
-    oklch(0.208 0.042 266 / 0.45) 100%
+    oklch(0.208 0.042 266 / 0.7) 0%,
+    oklch(0.208 0.042 266 / 0.5) 45%,
+    oklch(0.208 0.042 266 / 0.14) 100%
   );
 }
 
@@ -488,8 +492,17 @@
   .scrim {
     background: linear-gradient(
       to bottom,
-      oklch(0.208 0.042 266 / 0.82) 0%,
-      oklch(0.208 0.042 266 / 0.88) 100%
+      oklch(0.208 0.042 266 / 0.6) 0%,
+      oklch(0.208 0.042 266 / 0.72) 100%
     );
   }
+}
+
+/* Hero metnini fotoğraf üzerinde okunur tutar.
+   Scrim'i açtıkça bu gölge daha da önem kazanıyor: perdeyi karartmadan
+   metnin fotoğrafın açık bölgeleri üzerinde kaybolmasını engelliyor. */
+.hero-text {
+  text-shadow:
+    0 1px 2px oklch(0.129 0.042 265 / 0.55),
+    0 2px 12px oklch(0.129 0.042 265 / 0.45);
 }
