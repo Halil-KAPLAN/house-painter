@@ -48,14 +48,18 @@ export const CONTACT = {
    * Farklı yazımlar (NAP tutarsızlığı) yerel arama sıralamasını düşürür.
    */
   address: {
-    street: 'Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 8 Daire 2',
+    street: 'Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 11 Daire 1',
     district: 'Darıca',
     city: 'Kocaeli',
     postalCode: '41700',
     country: 'TR',
   },
 
-  /** Konum — schema.org `geo` alanı ve harita için */
+  /**
+   * Konum — schema.org `geo` alanı ve gömülü harita için.
+   * Koordinat, verilen Google Haritalar bağlantısındaki 1665. Sk. No: 11 iğnesinden
+   * alındı; yazılı adresle aynı binayı gösteriyor.
+   */
   geo: { lat: 40.7882631, lng: 29.387068 } as { lat: number; lng: number } | null,
 
   /** Google Haritalar bağlantıları */

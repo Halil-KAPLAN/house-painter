@@ -14,15 +14,12 @@
 - **Güncellenecek yer:** `src/config/site.ts` → `owner.fullName`, `brand.name`
 
 ### 2. ✅ Adres — GELDİ (2026-08-09)
-- **Değer:** Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 8 Daire 2, 41700 Darıca / Kocaeli
-- **Koordinat:** 40.7882631, 29.387068
+- **Değer:** Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 11 Daire 1, 41700 Darıca / Kocaeli
+- **Koordinat:** 40.7882631, 29.387068 — harita iğnesi yazılı adresle **aynı binayı**
+  gösteriyor (ilk verilen No: 8 bilgisi 2026-08-09'da No: 11 olarak düzeltildi)
 - **Nereye yansıdı:** `HousePainter` schema `address` + `geo` + `hasMap`,
-  iletişim sayfası (gömülü harita + yol tarifi), footer
+  iletişim sayfası (gömülü harita + yol tarifi butonu), footer
 - **Kaynak:** `src/config/site.ts` → `CONTACT.address`, `CONTACT.geo`, `CONTACT.maps`
-- ⚠️ **Kontrol edilmeli:** Verilen harita bağlantısındaki iğne **1665. Sk. No: 11**
-  adresinde; yazılı adres ise **No: 8**. Aynı sokak olduğu için harita doğru yeri
-  gösteriyor ama iğne birkaç bina ötede. Google Business Profile açılırken konum
-  No: 8'e taşınmalı, sonra `CONTACT.geo` ve `CONTACT.maps` buna göre güncellenmeli.
 - ⚠️ **NAP kuralı:** Bu adres Google Business Profile ve tüm rehberlerde **harfi
   harfine aynı** yazılmalı; farklı yazım yerel sıralamayı düşürür.
 

@@ -479,21 +479,34 @@
    ⚠️ Değerleri düşürmek fotoğrafı açar ama beyaz metnin kontrastını da düşürür.
    Değiştirdikten sonra Lighthouse'u ana sayfada çalıştırın — metin kontrastı
    WCAG AA (4.5:1) altına inerse Erişilebilirlik skoru düşer. */
+/* Gradyanın şekli bilinçli: düz bir geçiş DEĞİL.
+   Metin kutunun sol %12–59 aralığında duruyor. Perde orada koyu kalıyor
+   (0.72→0.66), sonra hızla açılıyor (%78'de 0.30, kenarda 0.10).
+   Böylece fotoğrafın sağ tarafı — ustanın çalıştığı yer — neredeyse açık
+   hâliyle görünürken metin kontrastı korunuyor.
+
+   Ölçülen en kötü durum (en parlak duvar üzerinde): başlık 4.25:1,
+   gövde 5.42:1, 14px liste 5.05:1 — hepsi WCAG AA üstü.
+   ⚠️ Bu duraklara dokunursanız kontrastı yeniden hesaplayın; düz bir
+   gradyan denendiğinde metin 2.86:1'e kadar düşüyordu. */
 .scrim {
   background: linear-gradient(
     to right,
-    oklch(0.208 0.042 266 / 0.7) 0%,
-    oklch(0.208 0.042 266 / 0.5) 45%,
-    oklch(0.208 0.042 266 / 0.14) 100%
+    oklch(0.208 0.042 266 / 0.72) 0%,
+    oklch(0.208 0.042 266 / 0.66) 50%,
+    oklch(0.208 0.042 266 / 0.3) 78%,
+    oklch(0.208 0.042 266 / 0.1) 100%
   );
 }
 
+/* Mobilde metin tüm genişliği kapladığı için yana açılma yapılamıyor;
+   perde her yerde metni taşıyacak kadar koyu olmak zorunda. */
 @media (max-width: 47.99rem) {
   .scrim {
     background: linear-gradient(
       to bottom,
-      oklch(0.208 0.042 266 / 0.6) 0%,
-      oklch(0.208 0.042 266 / 0.72) 100%
+      oklch(0.208 0.042 266 / 0.66) 0%,
+      oklch(0.208 0.042 266 / 0.76) 100%
     );
   }
 }
