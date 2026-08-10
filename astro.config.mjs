@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // NOT: Alan adı değiştiğinde burayı VE src/config/site.ts → SITE.url alanını güncelle.
-// docs/04-BEKLEYEN-BILGI.md
-const SITE_URL = 'https://bulentboyaci.com';
+// Sitemap, canonical ve Open Graph adresleri buradan üretilir.
+const SITE_URL = 'https://boyacibulentusta.com';
 
 export default defineConfig({
   site: SITE_URL,

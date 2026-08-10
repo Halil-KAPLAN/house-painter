@@ -23,12 +23,14 @@
 - ⚠️ **NAP kuralı:** Bu adres Google Business Profile ve tüm rehberlerde **harfi
   harfine aynı** yazılmalı; farklı yazım yerel sıralamayı düşürür.
 
-### 3. Alan adı (domain)
-- **Şu anki placeholder:** `https://bulentboyaci.com` (varsayım)
-- **Nereye yansır:** `astro.config.mjs` `site`, canonical, sitemap, OG `url`, robots.txt
-- **Güncellenecek yer:** `src/config/site.ts` → `url` **ve** `astro.config.mjs` → `site`
-- **Öneri:** İçinde bölge veya meslek geçen kısa bir ad — `bulentboyaci.com`,
-  `daricaboyaci.com`, `bulentustaboya.com`. `.com` tercih edilmeli.
+### 3. ✅ Alan adı — ALINDI (2026-08-09)
+- **Değer:** `https://boyacibulentusta.com` (Cloudflare Registrar)
+- **Birincil biçim:** www'suz. `www.boyacibulentusta.com` buna yönlenir.
+- **Yansıdığı yerler (hepsi güncellendi ve çıktıdan doğrulandı):**
+  `astro.config.mjs` → `SITE_URL`, `src/config/site.ts` → `SITE.url`,
+  `public/robots.txt` → Sitemap satırı, canonical, OG `og:url`, JSON-LD `@id`,
+  sitemap'teki 20 adres
+- **`netlify.toml`'daki `noindex` başlığı KALDIRILDI** — site artık aramaya açık
 
 ---
 

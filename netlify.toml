@@ -1,8 +1,11 @@
 # Netlify yapılandırması
 #
 # Site statik olduğu için adaptöre gerek yok — `dist/` klasörü olduğu gibi yayınlanır.
-# Netlify kök adreste sunduğu için (örn. bulent-usta.netlify.app) bağlantılarda
-# alt klasör düzeltmesi gerekmiyor; kaynak kod olduğu gibi çalışıyor.
+# Canlı adres: https://boyacibulentusta.com
+#
+# NOT: `noindex` başlığı 2026-08-09'da KALDIRILDI — alan adı bağlandı, site artık
+# arama motorlarına açık. Bir daha ön izleme amaçlı eklenirse yayına almadan önce
+# tekrar silinmesi gerekir.
 
 [build]
   command = "npm run build"
@@ -10,22 +13,6 @@
 
 [build.environment]
   NODE_VERSION = "22"
-
-# ─────────────────────────────────────────────────────────────────────────────
-# ⚠️  YAYIN ÖNCESİ SİLİNECEK BÖLÜM
-#
-# Kendi alan adı bağlanana kadar site *.netlify.app adresinde duruyor ve bu bir
-# TEST kopyası. Google bu kopyayı indekslerse, gerçek site yayına girdiğinde
-# kendi sitemizle "yinelenen içerik" olarak rekabet eder ve sıralamayı düşürür.
-#
-# Alan adını bağladıktan sonra AŞAĞIDAKİ BLOĞU TAMAMEN SİLİN,
-# sonra Search Console'dan siteyi yeniden taratın.
-# ─────────────────────────────────────────────────────────────────────────────
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-# ───────────────────────── SİLİNECEK BÖLÜM BİTTİ ─────────────────────────────
 
 # Güvenlik başlıkları
 [[headers]]

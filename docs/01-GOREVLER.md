@@ -142,11 +142,15 @@ alan adı, soyadı ve adres bilgisi (`04-BEKLEYEN-BILGI.md`).
 > Detay: `03-SEO.md`
 
 - [x] **Netlify'a deploy edildi** → https://bulent-usta.netlify.app (ön izleme) · 2026-08-05
-- [ ] ⚠️ **`netlify.toml`'daki `noindex` bloğu silindi** ← alan adı bağlanınca İLK bu
-      (atlanırsa ön izleme kopyası gerçek siteyle yinelenen içerik olarak rekabet eder)
-- [ ] Alan adı alındı; `site.ts` → `SITE.url`, `astro.config.mjs` → `site` ve
-      `public/robots.txt` → sitemap adresi güncellendi
-- [ ] Netlify'da alan adı **birincil** yapıldı (`.netlify.app` ona yönlensin)
+- [x] **Alan adı alındı:** `boyacibulentusta.com` (Cloudflare Registrar) · 2026-08-09
+- [x] `site.ts` → `SITE.url`, `astro.config.mjs` → `SITE_URL`, `public/robots.txt`
+      → sitemap adresi güncellendi; canonical/OG/JSON-LD/sitemap çıktıdan doğrulandı · 2026-08-09
+- [x] ⚠️ **`netlify.toml`'daki `noindex` bloğu SİLİNDİ** — site aramaya açıldı · 2026-08-09
+- [ ] **Cloudflare'de DNS kayıtları eklendi** (A `@` → 75.2.60.5 · CNAME `www` →
+      bulent-usta.netlify.app · ikisi de **gri bulut / DNS only**)
+- [ ] **Netlify'da alan adı eklendi ve birincil yapıldı** (`.netlify.app` ona yönlensin)
+- [ ] Netlify'da HTTPS sertifikası verildi (Domain management → HTTPS)
+- [ ] `https://boyacibulentusta.com` tarayıcıda kilit simgesiyle açılıyor
 - [ ] **Google Business Profile açıldı** ← yerel aramada en etkili adım
 - [ ] Google Search Console doğrulaması + sitemap gönderimi
 - [ ] Bing Webmaster Tools

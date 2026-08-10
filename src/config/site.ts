@@ -13,8 +13,12 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const SITE = {
-  /** TODO(04-BEKLEYEN-BILGI): gerçek alan adı alınınca burayı ve astro.config.mjs'i güncelle */
-  url: 'https://bulentboyaci.com',
+  /**
+   * Sitenin canlı adresi. Değişirse `astro.config.mjs` → SITE_URL ve
+   * `public/robots.txt` → Sitemap satırı da güncellenmeli.
+   * www'suz biçim birincil; www.* buna yönlenir.
+   */
+  url: 'https://boyacibulentusta.com',
 
   /** TODO(04-BEKLEYEN-BILGI): soyadı gelince "Bülent Soyad" olarak güncelle */
   name: 'Bülent Usta',
