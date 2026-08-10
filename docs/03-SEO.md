@@ -158,18 +158,90 @@ Her bölge sayfasında zorunlu olarak farklı olacaklar:
 
    **Bu adım atlanırsa yapılan tüm SEO çalışması boşa gidebilir.**
 
-1. **Google Business Profile açın** — google.com/business
-   - Kategori: "Boyacı" (birincil), "Ev tadilat hizmeti" (ikincil)
-   - Hizmet bölgesi işletmesi olarak kaydolun (adres göstermek zorunda değilsiniz)
-   - Aynı 11 fotoğrafı buraya da yükleyin
-   - Telefonu siteyle **birebir aynı** yazın
-2. **Google Search Console** — mülk doğrulayın, `sitemap-index.xml` gönderin
-3. **Bing Webmaster Tools** — Search Console'dan içe aktarma ile 2 dakika
-4. **NAP tutarlılığı** — İsim/Adres/Telefon; site, Google Business, sosyal medya ve
-   yerel rehberlerde **harfi harfine aynı** olmalı. Tutarsızlık yerel SEO'yu düşürür.
-5. **Gerçek yorum toplayın** — işi teslim ederken müşteriye Google yorum linkini
-   gönderin. Yerel sıralamada en yüksek getirili tek aksiyon budur.
-6. **Yerel rehberler** — sahibinden hizmet, armut.com, bulurum.com gibi platformlara
-   aynı NAP ile kayıt
-7. İlk 3 ay Search Console'da hangi kelimelerden gösterim aldığını izleyin, içeriği
-   gerçek arama verisine göre güncelleyin.
+> **Sıra bilinçli:** Business Profile doğrulaması günler–haftalar sürüyor, o yüzden
+> ÖNCE onu başlatın. Search Console 5 dakikalık iş, bekleme süresi yok.
+
+### 1. Google Business Profile — EN ÖNEMLİ ADIM
+
+[business.google.com](https://business.google.com) → **İşletmenizi Google'a ekleyin**
+
+**İşletme bilgileri**
+| Alan | Değer (siteyle birebir aynı olmalı) |
+|---|---|
+| İşletme adı | `Bülent Usta Boya` |
+| Birincil kategori | **Boyacı** |
+| Ek kategoriler | Ev tadilat hizmeti · Sıvacı |
+| Telefon | `+90 537 525 21 20` |
+| Web sitesi | `https://boyacibulentusta.com` |
+| Adres | `Sırasöğütler Mah. Aydınlar Cad. 1665. Sk. No: 11 Daire 1, 41700 Darıca / Kocaeli` |
+
+**"Müşteriler işletmenize geliyor mu?"** sorusuna **HAYIR** deyin → *hizmet bölgesi
+işletmesi* olarak kaydolur. Ardından hizmet bölgelerini girin:
+Darıca · Gebze · Çayırova · Tuzla · Pendik · Kartal
+
+Adresi haritada göstermek zorunlu değil (doğrulama için gerekli ama gizlenebilir).
+Sitede zaten yayında olduğu için göstermek de sorun değil — karar sizin.
+
+**Doğrulama:** Genelde video doğrulama isteniyor. Hazır olun: boya malzemeleri,
+merdiven, mala gibi ekipmanlar + iş yaptığınız yer + kesintisiz tek çekim.
+Bu aşama **günler sürebilir**, o yüzden ilk bunu başlatın.
+
+**Onaylandıktan sonra:**
+- `assets/` içindeki 11 fotoğrafın **aynısını** buraya da yükleyin
+- Hizmetler listesine 7 hizmeti tek tek ekleyin (`SERVICES` dizisindekiler)
+- Açıklama alanına sitedeki kısa tanıtımı yazın
+
+### 2. Google Search Console
+
+[search.google.com/search-console](https://search.google.com/search-console)
+
+1. **Add property** → soldaki **Domain** kutusunu seçin (tüm alt alan adlarını ve
+   http/https'i birden kapsar) → `boyacibulentusta.com`
+2. Google bir **TXT kaydı** verir. Cloudflare → `boyacibulentusta.com` → **DNS** →
+   **Records** → **Add record**:
+   - Type: `TXT` · Name: `@` · Content: Google'ın verdiği `google-site-verification=...`
+   - (TXT kayıtlarında proxy seçeneği yoktur, bulut sorunu olmaz)
+3. Cloudflare'de **Save** → Search Console'da **Verify** (1–2 dakika sürebilir)
+4. Sol menü **Sitemaps** → `sitemap-index.xml` yazıp **Submit**
+5. Üstteki arama kutusuna `https://boyacibulentusta.com/` yazıp **Request indexing**
+
+### 3. Bing Webmaster Tools
+
+[bing.com/webmasters](https://www.bing.com/webmasters) → **Import from Google
+Search Console**. 2 dakika, sıfır ek iş. Türkiye'de Bing payı küçük ama bedava.
+
+### 4. NAP tutarlılığı
+
+İsim / Adres / Telefon; site, Business Profile, sosyal medya ve yerel rehberlerde
+**harfi harfine aynı** olmalı. "Cad." yerine "Caddesi" yazmak bile tutarsızlık sayılır.
+
+### 5. Gerçek yorum toplayın — en yüksek getirili aksiyon
+
+Business Profile onaylandıktan sonra panelde **"Yorum isteyin"** bölümünden kısa
+bağlantıyı alın (`g.page/r/...` biçiminde). Sonra:
+
+- **Zamanlama:** İşi teslim ettiğiniz an, müşteri memnun ve evi tertemiz görmüşken
+- **Yöntem:** WhatsApp'tan bağlantıyı gönderin, "iki dakikanızı alır" deyin
+- **Hedef:** İlk 5–10 yorum en kritik; sıfırdan üçe çıkmak, on beşten yirmiye
+  çıkmaktan çok daha değerli
+
+> ⛔ **Yorum satın almayın, indirim karşılığı yorum istemeyin.** Google'ın politikasına
+> aykırı; tespit edilirse profil askıya alınır ve kazanılan sıralama sıfırlanır.
+> Bir de sahte yorumlar birbirine benzer, müşteri de anlıyor.
+
+### 6. Yerel rehberler
+
+sahibinden.com hizmet, armut.com, bulurum.com gibi platformlara **aynı NAP** ile kayıt.
+
+### 7. İlk 3 ay: veriye göre düzeltin
+
+Search Console → **Performance** sekmesinde hangi kelimelerden gösterim aldığınızı
+izleyin. Beklemediğiniz bir kelimeden trafik geliyorsa o konuda içerik güçlendirilir.
+Tahminle değil gerçek arama verisiyle karar verin.
+
+### Sonra siteye eklenecek (yorumlar gelince)
+
+Gerçek yorumlar toplandığında siteye yorumlar bölümü + `aggregateRating` yapısal
+verisi eklenebilir. Bunlar **bilerek** eklenmedi — uydurma puan Google spam
+politikası ihlali. Detay: `04-BEKLEYEN-BILGI.md` madde 6.
+Ayrıca "Google'da bize yorum yapın" butonu eklenebilir (bağlantı gelince).

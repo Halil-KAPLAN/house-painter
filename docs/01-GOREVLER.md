@@ -146,11 +146,23 @@ alan adı, soyadı ve adres bilgisi (`04-BEKLEYEN-BILGI.md`).
 - [x] `site.ts` → `SITE.url`, `astro.config.mjs` → `SITE_URL`, `public/robots.txt`
       → sitemap adresi güncellendi; canonical/OG/JSON-LD/sitemap çıktıdan doğrulandı · 2026-08-09
 - [x] ⚠️ **`netlify.toml`'daki `noindex` bloğu SİLİNDİ** — site aramaya açıldı · 2026-08-09
-- [ ] **Cloudflare'de DNS kayıtları eklendi** (A `@` → 75.2.60.5 · CNAME `www` →
-      bulent-usta.netlify.app · ikisi de **gri bulut / DNS only**)
-- [ ] **Netlify'da alan adı eklendi ve birincil yapıldı** (`.netlify.app` ona yönlensin)
-- [ ] Netlify'da HTTPS sertifikası verildi (Domain management → HTTPS)
-- [ ] `https://boyacibulentusta.com` tarayıcıda kilit simgesiyle açılıyor
+- [x] **Cloudflare DNS kayıtları** — A `@` → 75.2.60.5 · CNAME `www` →
+      bulent-usta.netlify.app · ikisi de **DNS only (gri bulut)** · 2026-08-09
+- [x] **Netlify'da alan adı eklendi ve birincil yapıldı**; `www` → apex 301 · 2026-08-09
+- [x] **HTTPS sertifikası verildi** — `CN=boyacibulentusta.com` (Let's Encrypt) · 2026-08-09
+- [x] **SİTE CANLI** — HTTP 200, `robots: index, follow`, sitemap erişilebilir · 2026-08-09
+
+### ⚠️ Cloudflare'de bekleyen
+- [ ] **Auto renew AÇILACAK** — şu an kapalı, alan adı 11 Ağustos 2027'de düşer
+      ve başkası alabilir (Domains → Registrations → boyacibulentusta.com)
+- [ ] Cloudflare'in "set records to proxied" uyarısı **UYGULANMAYACAK** — turuncu
+      bulut Netlify'ın SSL sertifikasını bozar, kayıtlar DNS only kalmalı
+
+### GitHub'da bekleyen
+- [ ] **GitHub Pages kapatılacak** (Settings → Pages → Source → None).
+      Açık kaldığı için GitHub siteyi Jekyll ile derlemeye çalışıp hata veriyor:
+      `Invalid YAML front matter in src/components/Footer.astro` — Jekyll, Astro
+      dosyasının `---` bloğunu YAML sanıyor. Canlı siteye etkisi yok, sadece gürültü.
 - [ ] **Google Business Profile açıldı** ← yerel aramada en etkili adım
 - [ ] Google Search Console doğrulaması + sitemap gönderimi
 - [ ] Bing Webmaster Tools
