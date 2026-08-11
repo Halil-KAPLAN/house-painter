@@ -53,8 +53,10 @@ import heroImage from '@assets/isler/saten-alci-uygulamasi.webp';
         class="hero-text mt-5 text-balance font-bold text-white"
         style="font-size: var(--text-hero); line-height: var(--text-hero--line-height); letter-spacing: var(--text-hero--letter-spacing);"
       >
-        Darıca'da Boya Ustası —
-        <span class="text-accent-400">Eşyalarınıza Zarar Vermeden</span>,
+        {/* {' '} şart: Astro etiketten önceki satır sonunu kırpıyor, onsuz
+            "Ustası —Eşyalarınıza" diye bitişik çıkıyor (h1'de, herkes görür) */}
+        Darıca'da Boya Ustası —{' '}
+        <span class="text-accent-400">Eşyalarınıza Zarar Vermeden</span>,{' '}
         Tertemiz Teslim
       </h1>
 

@@ -10,6 +10,7 @@
  *   6. JSON-LD geçerli JSON mu
  *   7. İç bağlantılar kırık mı (var olmayan sayfaya link)
  *   8. Satır içi etiketlerin etrafında boşluk kaybolmuş mu ("detay?Çünkü" gibi)
+ *   9. Uzun çizgiye bitişik metin var mı ("Ustası —Eşyalarınıza" gibi)
  *
  * Çalıştırma: npm run seo
  */
@@ -189,6 +190,27 @@ async function main() {
         const parca = p.raw.slice(Math.max(0, m.index - 45), m.index + 45).replace(/\s+/g, ' ');
         problems.push(`${p.url} — satır içi etikette boşluk kaybolmuş: …${parca}…`);
       }
+    }
+  }
+
+  // 9 — uzun çizgiye (—) bitişik metin
+  //
+  // 8. kontrol `span` etiketini hariç tuttuğu için (rozet/sayaç gibi flex
+  // çocuklarında yanlış alarm veriyordu) bir hata kaçmıştı: ana sayfanın h1'i
+  // "Boya Ustası —Eşyalarınıza" diye bitişik çıkıyordu.
+  //
+  // Bu kontrol etiketlere değil ÜRETİLEN METNE bakar, o yüzden hangi etiketin
+  // kullanıldığından bağımsız çalışır.
+  //
+  // Sadece uzun çizgi (—) taranır. Kısa çizgi (–) sayı aralıklarında boşluksuz
+  // kullanılır ("2–3 gün", "5–7 gün") ve bu DOĞRU yazımdır; taranırsa yanlış
+  // alarm verir.
+  const CIZGI_YAPISIK = /[\p{L}\p{N}]—|—[\p{L}\p{N}]/gu;
+
+  for (const p of pages) {
+    for (const m of p.text.matchAll(CIZGI_YAPISIK)) {
+      const parca = p.text.slice(Math.max(0, m.index - 45), m.index + 45);
+      problems.push(`${p.url} — uzun çizgiye bitişik metin (boşluk eksik): …${parca}…`);
     }
   }
 

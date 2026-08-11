@@ -28,7 +28,9 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
             DARICA BOYACI
           </span>
         </span>
-        <span class="sr-only">— ana sayfa</span>
+        {/* Baştaki boşluk bilerek: onsuz erişilebilir ad
+            "DARICA BOYACI— ana sayfa" diye bitişik okunuyor */}
+        <span class="sr-only">{' '}— ana sayfa</span>
       </a>
 
       {/* Masaüstü menü */}
