@@ -5,6 +5,9 @@ A local-SEO focused marketing site for a house painter based in Darıca, Kocaeli
 Built to do one job well: rank for local searches like *"Darıca boyacı"* (Darıca painter)
 and turn that traffic into phone calls.
 
+**Prod: https://boyacibulentusta.com
+**Currently deployed on Netlify:** https://bulent-usta.netlify.app
+
 ![Site preview](public/og-image.jpg)
 
 > **Note:** The site content and the in-repo documentation (`docs/`) are in Turkish,
@@ -213,8 +216,6 @@ the part that is actually under our control — and does it thoroughly.
 ## Deployment
 
 The build output in `dist/` is fully static — no server or adapter required.
-
-**Currently deployed on Netlify:** https://bulent-usta.netlify.app
 
 `netlify.toml` holds the whole configuration:
 
