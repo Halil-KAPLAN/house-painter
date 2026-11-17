@@ -1,4 +1,4 @@
-# Bülent Usta — House Painter Website
+# House Painter Website
 
 A local-SEO focused marketing site for a house painter based in Darıca, Kocaeli (Turkey).
 
