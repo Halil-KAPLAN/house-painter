@@ -5,7 +5,8 @@ A local-SEO focused marketing site for a house painter based in Darıca, Kocaeli
 Built to do one job well: rank for local searches like *"Darıca boyacı"* (Darıca painter)
 and turn that traffic into phone calls.
 
-**Prod: https://boyacibulentusta.com
+**Prod:** https://boyacibulentusta.com
+
 **Currently deployed on Netlify:** https://bulent-usta.netlify.app
 
 ![Site preview](public/og-image.jpg)
